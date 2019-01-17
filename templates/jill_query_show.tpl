@@ -1,9 +1,2 @@
-<{assign var=all_col value=$block.content}>
-<{assign var=qsn value=$block.qsn}>
-<{assign var=query_arr value=$block.query_arr}>
-<a href="<{$xoops_url}>/modules/jill_query/index.php?qsn=<{$qsn}>"><h3><{$query_arr.title}></h3></a>
-<div class="alert alert-info">
-  <form action="<{$xoops_url}>/modules/jill_query/index.php#result" method="post" id="myForm" class="form-horizontal"  role="form">
-  	<{includeq file="$xoops_rootpath/modules/jill_query/templates/jill_query_form.tpl"}>
-  </form>
-</div>
+<{assign var=this_file value=$smarty.template|basename|replace:'db:':''}>
+<{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b4.tpl"}>
