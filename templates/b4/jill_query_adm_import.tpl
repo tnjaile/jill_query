@@ -15,7 +15,7 @@
     </ol>
   </div>
 
-    <form action="<{$action}>" method="post" id="myForm"  role="form" >
+    <form action="<{$action}>" method="post" id="myForm"  role="form" enctype="multipart/form-data">
       <div class="form-group row">
         <label class="col-sm-6">
           <input type='file' name="excel" id="excel" style="width: 100%;" placeholder="<{$smarty.const._MD_JILLQUERY_DATAMANAGEMENT}>">
