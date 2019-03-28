@@ -13,6 +13,7 @@ $qsn = (empty($_GET['qsn'])) ? '' : intval($_GET['qsn']);
 $query_arr = get_jill_query($qsn);
 $col_arr   = get_jill_query_allcol_qsn($qsn);
 
+// die(var_dump($col_arr));
 $objPHPExcel = new PHPExcel(); //實體化Excel
 $objPHPExcel->setActiveSheetIndex(0); //設定預設顯示的工作表
 $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objActSheet
@@ -28,16 +29,17 @@ foreach ($col_arr as $qcsn => $title_arr) {
     $objActSheet->setCellValue($Letter, $title);
     $columnNumber++;
 }
-$count_ssn = count_jill_query_sn($qsn);
-//die(var_dump($qcsn_arr));
+$ssn_arr = get_jill_query_allsn_qsn($qsn);
+// die(var_dump($ssn_arr));
 $i = 2;
-for ($ssn = 1; $ssn <= $count_ssn; $ssn++) {
+foreach ($ssn_arr as $ssn) {
     $columnNumber = 1;
     foreach ($qcsn_arr as $qcsn) {
         $Letter = getColumnLetter($columnNumber) . $i;
 
         $sql = "select `fillValue` from `" . $xoopsDB->prefix("jill_query_col_value") . "`
         where `qcsn` = '{$qcsn}' && `ssn`= '{$ssn}'  ";
+        // die($sql);
         $result          = $xoopsDB->query($sql) or web_error($sql);
         list($fillValue) = $xoopsDB->fetchRow($result);
         $objActSheet->setCellValue($Letter, $fillValue);
