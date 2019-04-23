@@ -49,9 +49,9 @@ foreach ($ssn_arr as $ssn) {
 }
 //匯出
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename=' . $query_arr['title'] . '.xls');
+header('Content-Disposition: attachment;filename=' . $query_arr['title'] . '.xlsx');
 header('Cache-Control: max-age=0');
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');
 exit;
