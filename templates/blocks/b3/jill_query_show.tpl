@@ -4,6 +4,6 @@
 <a href="<{$xoops_url}>/modules/jill_query/index.php?qsn=<{$qsn}>"><h3><{$query_arr.title}></h3></a>
 <div class="alert alert-info">
   <form action="<{$xoops_url}>/modules/jill_query/index.php#result" method="post" id="myForm" class="form-horizontal"  role="form">
-  	<{includeq file="$xoops_rootpath/modules/jill_query/templates/jill_query_form.tpl"}>
+  	<{includeq file="$xoops_rootpath/modules/jill_query/templates/b3/jill_query_form.tpl"}>
   </form>
 </div>
