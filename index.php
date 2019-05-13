@@ -16,7 +16,8 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 include "header.php";
 $xoopsOption['template_main'] = 'jill_query_index.tpl';
@@ -39,11 +40,11 @@ function search($qsn = '')
     }
 
     add_jill_query_counter($qsn);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='$qsn' && `qcsnSearch`=1 order by `qcSort`";
     //die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
     if (empty($total)) {
         redirect_header("index.php", 3, _MD_JILLQUERY_EMPTY_SEARCH);
@@ -68,20 +69,10 @@ function search($qsn = '')
         $i++;
     }
     //套用formValidator驗證機制
-    if (!file_exists(TADTOOLS_PATH . "/formValidator.php")) {
-        redirect_header("index.php", 3, _TAD_NEED_TADTOOLS);
-    }
-    include_once TADTOOLS_PATH . "/formValidator.php";
-    $formValidator      = new formValidator("#myForm", true);
+    $formValidator      = new FormValidator("#myForm", true);
     $formValidator_code = $formValidator->render();
     $xoopsTpl->assign('formValidator_code', $formValidator_code);
 
-    //加入Token安全機制
-    // include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    // $token      = new XoopsFormHiddenToken();
-    // $token_form = $token->render();
-    // $xoopsTpl->assign("token_form", $token_form);
-    //die(var_dump($query_arr));
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('title', $query_arr['title']);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
@@ -95,10 +86,10 @@ function list_jill_query()
 {
     global $xoopsDB, $xoopsTpl, $isAdmin;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $sql    = "select * from `" . $xoopsDB->prefix("jill_query") . "` where isEnable='1'  order by qsn desc ";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
 
     $all_content = array();
@@ -165,7 +156,7 @@ function show_result($qsn = "")
     if (is_array($title_arr)) {
         $title_show_arr  = filter_by_value($title_arr, 'isShow', '1');
         $qcsn_arr        = array_keys($title_arr);
-        $myts            = MyTextSanitizer::getInstance();
+        $myts            = \MyTextSanitizer::getInstance();
         $search_operator = current($_POST['search_operator']);
         if ($search_operator == "and") {
             foreach ($_POST['fillValue'] as $qcsn => $fillValue) {
@@ -192,16 +183,21 @@ function show_result($qsn = "")
                 $ssn_arr[] = get_jill_query_col_value_ssn($qcsn, $fillValue);
             }
             //取聯集
-            if (sizeof($ssn_arr) > 0) {
+            if (isset($ssn_arr) && sizeof($ssn_arr) > 0) {
                 $ssn_arr = array_unique(call_user_func_array('array_merge', $ssn_arr));
             }
         }
-        // die(var_dump($ssn_arr));
-        foreach ($ssn_arr as $key => $ssn) {
-            foreach ($title_show_arr as $qcsn => $qc_arr) {
-                $all_content[$ssn][] = get_jill_query_col_fillValue_qsn($ssn, $qcsn);
+        if (isset($ssn_arr)) {
+            // die(var_dump($ssn_arr));
+            foreach ($ssn_arr as $key => $ssn) {
+                foreach ($title_show_arr as $qcsn => $qc_arr) {
+                    $all_content[$ssn][] = get_jill_query_col_fillValue_qsn($ssn, $qcsn);
+                }
             }
+            $total = sizeof($ssn_arr);
+            $xoopsTpl->assign('total', sprintf(_MD_JILLQUERY_TOTAL, $total));
         }
+
         //die(var_dump($all_content));
         $xoopsTpl->assign('title_show_arr', $title_show_arr);
 
@@ -212,8 +208,6 @@ function show_result($qsn = "")
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('now_op', 'show_result');
-    $total = sizeof($ssn_arr);
-    $xoopsTpl->assign('total', sprintf(_MD_JILLQUERY_TOTAL, $total));
 
     search($qsn);
 }
@@ -230,14 +224,14 @@ function get_jill_query_col_value_ssn($qcsn = "", $fillValue = "")
     $sql = "select `isLike` from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qcsn`='{$qcsn}' ";
     //die($sql);
-    $result       = $xoopsDB->query($sql) or web_error($sql);
+    $result       = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($isLike) = $xoopsDB->fetchRow($result);
     $isLike_str   = (empty($isLike)) ? " a.`fillValue` = '{$fillValue}' " : " a.`fillValue` like '%{$fillValue}%'";
     $sql          = "select a.`ssn` from `" . $xoopsDB->prefix("jill_query_col_value") . "` as a
 		join `" . $xoopsDB->prefix("jill_query_sn") . "` as b on a.`ssn`=b.`ssn`
     where a.`qcsn`='{$qcsn}' && $isLike_str ";
     // die($sql);
-    $result  = $xoopsDB->query($sql) or web_error($sql);
+    $result  = $xoopsDB->query($sql) or Utility::web_error($sql);
     $ssn_arr = array();
     $i       = 0;
     while (list($ssn) = $xoopsDB->fetchRow($result)) {
@@ -260,7 +254,7 @@ function add_jill_query_counter($qsn = '')
     $sql = "update `" . $xoopsDB->prefix("jill_query") . "`
     set `counter` = `counter` + 1
     where `qsn` = '{$qsn}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 }
 //公開查詢
 function public_query($qsn)
@@ -284,16 +278,16 @@ function public_query($qsn)
         $qcsn_arr       = array_keys($title_arr);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn`='{$qsn}' order by `qrSort` ";
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 20, 10);
+    //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
     $all_content = array();
     while (list($ssn, $qrSort) = $xoopsDB->fetchRow($result)) {
@@ -342,6 +336,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign("toolbar", Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 include_once XOOPS_ROOT_PATH . '/footer.php';

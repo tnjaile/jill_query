@@ -17,7 +17,7 @@ if (!function_exists("get_jill_query")) {
 
         $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "`
     	where `qsn` = '{$qsn}'";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql);
         $data   = $xoopsDB->fetchArray($result);
         return $data;
     }
@@ -33,7 +33,7 @@ if (!function_exists("count_jill_query_col_qsn")) {
         }
         $sql = "select count(*) from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qsn` = '{$qsn}'";
-        $result      = $xoopsDB->query($sql) or web_error($sql);
+        $result      = $xoopsDB->query($sql) or Utility::web_error($sql);
         list($count) = $xoopsDB->fetchRow($result);
         return $count;
     }
@@ -50,7 +50,7 @@ if (!function_exists("get_jill_query_allcol_qsn")) {
 
         $sql = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qsn` = '{$qsn}' order by `qcSort`";
-        $result   = $xoopsDB->query($sql) or web_error($sql);
+        $result   = $xoopsDB->query($sql) or Utility::web_error($sql);
         $data_arr = array();
         while ($data = $xoopsDB->fetchArray($result)) {
             $qcsn            = $data['qcsn'];
@@ -71,7 +71,7 @@ if (!function_exists("get_jill_query_col_fillValue_qsn")) {
 
         $sql = "select fillValue from `" . $xoopsDB->prefix("jill_query_col_value") . "`
         where `ssn` = '{$ssn}' && `qcsn`='{$qcsn}' ";
-        $result          = $xoopsDB->query($sql) or web_error($sql);
+        $result          = $xoopsDB->query($sql) or Utility::web_error($sql);
         list($fillValue) = $xoopsDB->fetchRow($result);
         if (substr(trim($fillValue), 0, 4) == "http") {
             $fillValue = "<a href='{$fillValue}' target='_blank'>{$fillValue}</a>";
@@ -88,7 +88,7 @@ if (!function_exists("get_public_menu_options")) {
 
         $sql = "select `qsn`, `title`
     from `" . $xoopsDB->prefix("jill_query") . "` where `isEnable`='1' && `ispublic`='1' order by `qsn` desc ";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
         $option = '';
         while (list($qsn, $title) = $xoopsDB->fetchRow($result)) {

@@ -16,12 +16,10 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
-include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
+xoops_loadLanguage('admin_common', 'tadtools');
 define('_MA_JILLQUERY_ISPUBLIC', '公開');
 define('_MA_JILLQUERY_ISPUBLIC_DESC', '是否公開');
 define('_MA_JILLQUERY_ISLIKE', '啟用關鍵字查詢');
-define('_TAD_NEED_TADTOOLS', '需要 tadtools 模組，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 //import.php
 define('_MA_JILLQUERY_IMPORT_TITLE', '匯入Excel 檔並直接建立查詢');
 define('_MA_JILLQUERY_IMPORT_NOTE1', '匯入時，會以檔名作為專案預設名稱。');
@@ -72,4 +70,6 @@ define('_MA_JILLQUERY_COPY', '複製查詢');
 define('_MA_JILLQUERY_COPYSUCCESS', '複製成功，請修改標題');
 define('_MA_JILLQUERY_PASSWD', '設定查詢密碼');
 define('_MA_JILLQUERY_EXPORT', '匯出EXCEL');
-define('_MD_JILLQUERY_ILLEGAL', '無權限');
+define('_MD_JILLQUERY_SORT_FAIL', '更新失敗');
+define('_MD_JILLQUERY_SORTED', '更新成功');
+// define('_MD_JILLQUERY_ILLEGAL', '無權限');

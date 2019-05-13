@@ -16,6 +16,7 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
+xoops_loadLanguage('main', 'tadtools');
 define('_MD_JILLQUERY_PUBLIC', '觀看所有公開資料');
 define('_MD_JILLQUERY_PUBLICERROR', '此事件不公開查詢');
 define('_MD_JILLQUERY_PUBLICQUERY', '目前的查詢事件為：');
@@ -43,7 +44,6 @@ define('_MD_JILLQUERY_BACKSEARCH', '重新查詢');
 define('_MD_JILLQUERY_NOTOPEN', '尚未開放');
 define('_MD_NOFORM', '尚無任何查詢資訊');
 define('_MD_JILLQUERY_PERIOD', '報名期間');
-define('_TAD_NEED_TADTOOLS', '需要 tadtools 模組，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 define('_MD_JILLQUERY_SMNAME1', '查詢主頁');
 define('_MD_JILLQUERY_RESULT', '查詢結果');
 define('_MD_REQUIRED', '*此欄必填方可進行查詢');

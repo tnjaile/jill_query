@@ -17,8 +17,7 @@
  * @version    $Id $
  **/
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
-
+xoops_loadLanguage('modinfo_common', 'tadtools');
 define('_MI_JILLQUERY_NAME', '簡易查詢系統');
 define('_MI_JILLQUERY_AUTHOR', 'tnjaile@gmail.com');
 define('_MI_JILLQUERY_CREDITS', 'tad');

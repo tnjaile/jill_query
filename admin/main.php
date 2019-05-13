@@ -16,7 +16,10 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $isAdmin                      = true;
 $xoopsOption['template_main'] = 'jill_query_adm_main.tpl';
@@ -74,26 +77,18 @@ function jill_query_form($qsn = '')
     //$op = "replace_jill_query";
 
     //套用formValidator驗證機制
-    if (!file_exists(TADTOOLS_PATH . "/formValidator.php")) {
-        redirect_header("index.php", 3, _TAD_NEED_TADTOOLS);
-    }
-    include_once TADTOOLS_PATH . "/formValidator.php";
-    $formValidator      = new formValidator("#myForm", true);
+    $formValidator      = new FormValidator("#myForm", true);
     $formValidator_code = $formValidator->render();
 
     //說明
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
-        redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
-    $ck = new CKEditor("jill_query", "directions", $directions);
+    $ck = new CkEditor("jill_query", "directions", $directions);
     $ck->setHeight(200);
     $editor = $ck->render();
     $xoopsTpl->assign('directions_editor', $editor); //備註
 
     //加入Token安全機制
     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $token      = new XoopsFormHiddenToken();
+    $token      = new \XoopsFormHiddenToken();
     $token_form = $token->render();
     $xoopsTpl->assign("token_form", $token_form);
     $xoopsTpl->assign('action', $_SERVER["PHP_SELF"]);
@@ -116,7 +111,7 @@ function insert_jill_query()
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $qsn         = intval($_POST['qsn']);
     $title       = $myts->addSlashes($_POST['title']);
@@ -147,7 +142,7 @@ function insert_jill_query()
         '{$ispublic}'
     )";
     //die($sql);
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or Utility::web_error($sql);
 
     //取得最後新增資料的流水編號
     $qsn = $xoopsDB->getInsertId();
@@ -169,7 +164,7 @@ function update_jill_query($qsn = '')
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $qsn         = intval($_POST['qsn']);
     $title       = $myts->addSlashes($_POST['title']);
@@ -190,7 +185,7 @@ function update_jill_query($qsn = '')
        `passwd` = '{$passwd}',
        `ispublic` = '{$ispublic}'
     where `qsn` = '$qsn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
     return $qsn;
 }
@@ -210,10 +205,10 @@ function delete_jill_query($qsn = '')
     delete_data($qsn);
     $sql = "delete from `" . $xoopsDB->prefix("jill_query_col") . "`
         where `qsn`='{$qsn}' ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
     $sql = "delete from `" . $xoopsDB->prefix("jill_query") . "`
     where `qsn` = '{$qsn}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
 }
 
@@ -228,11 +223,11 @@ function show_one_jill_query($qsn = '')
         $qsn = intval($qsn);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "`
     where `qsn` = '{$qsn}' ";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $all    = $xoopsDB->fetchArray($result);
 
     //以下會產生這些變數： $qsn, $title, $directions, $editorEmail, $isEnable, $counter, $uid
@@ -265,12 +260,8 @@ function show_one_jill_query($qsn = '')
     $xoopsTpl->assign('uid_name', $uid_name);
     $xoopsTpl->assign('passwd', $passwd);
     $xoopsTpl->assign('ispublic', $ispublic);
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
-    }
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert_obj        = new sweet_alert();
+    $sweet_alert_obj        = new SweetAlert();
     $delete_jill_query_func = $sweet_alert_obj->render('delete_jill_query_func', "{$_SERVER['PHP_SELF']}?op=delete_jill_query&qsn=", "qsn");
     $xoopsTpl->assign('delete_jill_query_func', $delete_jill_query_func);
 
@@ -283,17 +274,17 @@ function list_jill_query()
 {
     global $xoopsDB, $xoopsTpl, $isAdmin;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "` order by isEnable desc,qsn desc";
 
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 20, 10);
+    //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
     $all_content = array();
     $i           = 0;
@@ -334,11 +325,7 @@ function list_jill_query()
     }
     //die(var_dump($all_content));
     //刪除確認的JS
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert_obj        = new sweet_alert();
+    $sweet_alert_obj        = new SweetAlert();
     $delete_jill_query_func = $sweet_alert_obj->render('delete_jill_query_func',
         "{$_SERVER['PHP_SELF']}?op=delete_jill_query&qsn=", "qsn");
     $xoopsTpl->assign('delete_jill_query_func', $delete_jill_query_func);
@@ -359,7 +346,7 @@ function copy_cols($qsn = "")
     }
     $sourceArr               = get_jill_query($qsn);
     $source_colsArr          = get_jill_query_allcol_qsn($qsn);
-    $myts                    = MyTextSanitizer::getInstance();
+    $myts                    = \MyTextSanitizer::getInstance();
     $sourceArr['title']      = $myts->addSlashes($sourceArr['title']);
     $sourceArr['directions'] = $myts->addSlashes($sourceArr['directions']);
     //die(var_dump($source_colsArr));
@@ -380,7 +367,7 @@ function copy_cols($qsn = "")
         '{$uid}'
     )";
     //die($sql);
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
     //取得最後新增資料的流水編號
     $qsn = $xoopsDB->getInsertId();
@@ -389,7 +376,7 @@ function copy_cols($qsn = "")
                 (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`)
                 values('{$qsn}' , '{$cols['qc_title']}' , '{$cols['qcsnSearch']}','{$cols['search_operator']}','{$cols['isShow']}','{$cols['qcSort']}')";
         //die($sql);
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
     }
 
     return $qsn;

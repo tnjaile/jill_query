@@ -21,7 +21,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_JILLQUERY_NAME;
-$modversion['version']     = '2.10';
+$modversion['version']     = '2.20';
 $modversion['description'] = _MI_JILLQUERY_DESC;
 $modversion['author']      = _MI_JILLQUERY_AUTHOR;
 $modversion['credits']     = _MI_JILLQUERY_CREDITS;
@@ -31,14 +31,14 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['status_version']      = '2.10';
-$modversion['release_date']        = '2019-01-17';
+$modversion['status_version']      = '2.20';
+$modversion['release_date']        = '2019-05-13';
 $modversion['module_website_url']  = 'https://github.com/tnjaile/';
 $modversion['module_website_name'] = _MI_JILLQUERY_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'https://github.com/tnjaile/';
 $modversion['author_website_name'] = _MI_JILLQUERY_AUTHOR_WEB;
-$modversion['min_php']             = '5.4';
+$modversion['min_php']             = '5.6';
 $modversion['min_xoops']           = '2.5';
 
 //---paypal資訊---//

@@ -18,11 +18,12 @@
  **/
 
 /*-----------引入檔案區--------------*/
-$isAdmin                      = true;
+use XoopsModules\Tadtools\Utility;
+// use XoopsModules\Tadtools\Jeditable;
 $xoopsOption['template_main'] = 'jill_query_adm_setsearch.tpl';
 include_once "header.php";
 include_once "../function.php";
-
+$isAdmin = true;
 /*-----------功能函數區--------------*/
 function list_searchcol($qsn = "")
 {
@@ -33,14 +34,13 @@ function list_searchcol($qsn = "")
         redirect_header("main.php", 3, _MA_JILLQUERY_EMPTYQSN);
     }
     //jquery表單即點即編
-    // include_once XOOPS_ROOT_PATH . "/modules/tadtools/jeditable.php";
-    // $jeditable = new jeditable();
+    // $jeditable = new Jeditable();
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='$qsn' && `qcsnSearch`=1 order by `qcSort`";
     //die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
     if (empty($total)) {
         redirect_header("setcol.php?qsn={$qsn}", 3, _MA_JILLQUERY_SETCOL);
@@ -69,7 +69,7 @@ function list_searchcol($qsn = "")
     }
     //die(var_dump($all_content));
 
-    // $xoopsTpl->assign('jill_query_col_jquery_ui', get_jquery(true));
+    // $xoopsTpl->assign('jill_query_col_jquery_ui', Utility::get_jquery(true));
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('title', $queryArr['title']);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
@@ -85,14 +85,14 @@ function update_searchcol($qsn = "")
         redirect_header($_SERVER['PHP_SELF'], 3, _TAD_PERMISSION_DENIED);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $search_operator = $myts->addSlashes($_POST['search_operator']);
 
     $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
        `search_operator` = '{$search_operator}'
     where `qsn` = '$qsn' && `qcsnSearch`='1' ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
     return $qsn;
 }
 /*-----------執行動作判斷區----------*/

@@ -30,6 +30,6 @@ function change_enable($qcsn = "", $name = "")
     }
 
     $sql = "update " . $xoopsDB->prefix("jill_query_col") . " set `$name`='{$value}' {$update_search_operator} where qcsn='{$qcsn}'  ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or die($xoopsDB->error());
     return $new_pic;
 }

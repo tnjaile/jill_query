@@ -18,10 +18,7 @@
  **/
 
 //引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
-    redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-}
-include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
+xoops_loadLanguage('main', 'tadtools');
 include_once XOOPS_ROOT_PATH . "/modules/jill_query/function_block.php";
 /********************* 自訂函數 *********************/
 
@@ -36,7 +33,7 @@ function get_jill_query_col($qcsn = '')
 
     $sql = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qcsn` = '{$qcsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -54,8 +51,9 @@ function get_jill_query_allsn_qsn($qsn = '')
     // where `qsn` = '{$qsn}' order by `qrSort` ";
     $sql = "select ssn,qrSort from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn` = '{$qsn}' && `uid`='{$uid}' order by `qrSort` ";
-
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+    // die($sql);
+    $ssn_arr = array();
     while (list($ssn, $qrSort) = $xoopsDB->fetchRow($result)) {
         $ssn_arr[$qrSort] = $ssn;
     }
@@ -75,7 +73,7 @@ function count_jill_query_sn($qsn = '')
     $sql = "select count(*) from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn` = '{$qsn}'";
     //die($sql);
-    $result      = $xoopsDB->query($sql) or web_error($sql);
+    $result      = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($count) = $xoopsDB->fetchRow($result);
     return $count;
 }
@@ -85,7 +83,7 @@ function jill_query_col_search_operator($qsn = "")
 {
     global $xoopsDB;
     $sql                   = "select DISTINCT search_operator from `" . $xoopsDB->prefix("jill_query_col") . "` where `qsn`=$qsn && (`search_operator` !='') ";
-    $result                = $xoopsDB->query($sql) or web_error($sql);
+    $result                = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($search_operator) = $xoopsDB->fetchRow($result);
     return $search_operator;
 }
@@ -107,21 +105,21 @@ function delete_data($qsn = "")
     foreach ($ssn_arr as $ssn) {
         $sql = "delete from `" . $xoopsDB->prefix("jill_query_col_value") . "`
         where `ssn`='{$ssn}' ";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
     }
 
     $sql = "delete from `" . $xoopsDB->prefix("jill_query_sn") . "`
         where `qsn`='{$qsn}' && `uid`='{$uid}' ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
     $sql = "select ssn from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn` = '{$qsn}'  order by `ssn` ";
     //die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $i      = 1;
     while (list($ssn) = $xoopsDB->fetchRow($result)) {
         $sql = "update `" . $xoopsDB->prefix("jill_query_sn") . "` set qrSort='{$i}' where `ssn`='{$ssn}' ";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
         $i++;
     }
 
@@ -139,7 +137,7 @@ function get_undertaker($qsn = "")
     // $sql    = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn' and `editorEmail` LIKE '%{$uemail}%' &&  `isEnable`='1' ";
     $sql = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn'  &&  `isEnable`='1' ";
     //die($sql);
-    $result            = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error($sql));
+    $result            = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, Utility::web_error($sql));
     list($editorEmail) = $xoopsDB->fetchRow($result);
     //避免填入空白
     $editorEmail = str_replace(" ", "", $editorEmail);

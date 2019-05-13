@@ -17,6 +17,8 @@
  * @author     a
  * @version    $Id $
  **/
+use XoopsModules\Tadtools\Utility;
+
 include_once XOOPS_ROOT_PATH . "/modules/jill_query/function_block.php";
 //區塊主函式 (jill_query_show)
 function jill_query_show($options)
@@ -29,11 +31,11 @@ function jill_query_show($options)
     $query_arr = get_jill_query($options[0]);
 
     //die(var_dump($query_arr));
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='{$options[0]}' && `qcsnSearch`=1 order by `qcSort`";
     //die($sql);
-    $result           = $xoopsDB->query($sql) or web_error($sql);
+    $result           = $xoopsDB->query($sql) or Utility::web_error($sql);
     $block['content'] = array();
     $i                = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -91,7 +93,7 @@ function get_jill_query_menu_options($default_qsn = "")
 
     $sql = "select `qsn`, `title`
     from `" . $xoopsDB->prefix("jill_query") . "` where `isEnable`='1' order by `qsn` desc ";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
     $option = '';
     while (list($qsn, $title) = $xoopsDB->fetchRow($result)) {

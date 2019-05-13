@@ -17,6 +17,8 @@
  * @author     a
  * @version    $Id $
  **/
+use XoopsModules\Tadtools\Utility;
+
 include_once XOOPS_ROOT_PATH . "/modules/jill_query/function_block.php";
 //區塊主函式 (jill_query_public)
 function jill_query_public($options)
@@ -32,11 +34,11 @@ function jill_query_public($options)
     $title_show_arr = filter_by_value($title_arr, 'isShow', '1');
     $qcsn_arr       = array_keys($title_show_arr);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn`='{$options[0]}' order by `qrSort` limit 0,{$show_nums} ";
 
-    $result           = $xoopsDB->query($sql) or web_error($sql);
+    $result           = $xoopsDB->query($sql) or Utility::web_error($sql);
     $block['content'] = array();
     while (list($ssn, $qrSort) = $xoopsDB->fetchRow($result)) {
         foreach ($title_show_arr as $qcsn => $qc_arr) {

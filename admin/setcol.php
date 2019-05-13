@@ -16,7 +16,9 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
+// use XoopsModules\Tadtools\Jeditable;
 /*-----------引入檔案區--------------*/
 $isAdmin                      = true;
 $xoopsOption['template_main'] = 'jill_query_adm_setcol.tpl';
@@ -33,12 +35,11 @@ function list_col($qsn = "")
         redirect_header("main.php", 3, _MA_JILLQUERY_EMPTYQSN);
     }
     //jquery表單即點即編
-    // include_once XOOPS_ROOT_PATH . "/modules/tadtools/jeditable.php";
-    // $jeditable = new jeditable();
-    $myts = MyTextSanitizer::getInstance();
+    // $jeditable = new new Jeditable();
+    $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='$qsn' order by `qcSort`";
-    $result      = $xoopsDB->query($sql) or web_error($sql);
+    $result      = $xoopsDB->query($sql) or Utility::web_error($sql);
     $total       = $xoopsDB->getRowsNum($result);
     $all_content = array();
     $i           = 0;
@@ -79,16 +80,12 @@ function list_col($qsn = "")
     }
     //die(var_dump($all_content));
     //刪除確認的JS
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
-        redirect_header("index.php", 3, _MD_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert_obj            = new sweet_alert();
+    $sweet_alert_obj            = new SweetAlert();
     $delete_jill_query_col_func = $sweet_alert_obj->render('delete_jill_query_col_func',
         "{$_SERVER['PHP_SELF']}?op=delete_jill_query_col&qsn=$qsn&qcsn=", "qcsn");
     $xoopsTpl->assign('delete_jill_query_col_func', $delete_jill_query_col_func);
 
-    $xoopsTpl->assign('jill_query_col_jquery_ui', get_jquery(true));
+    $xoopsTpl->assign('jill_query_col_jquery_ui', Utility::get_jquery(true));
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('isAdmin', $isAdmin);
@@ -102,7 +99,7 @@ function insert_col($qsn = "")
 {
     global $xoopsDB;
 
-    $myts              = MyTextSanitizer::getInstance();
+    $myts              = \MyTextSanitizer::getInstance();
     $_POST['qc_title'] = $myts->addSlashes($_POST['qc_title']);
     $qcsnSearch        = intval($_POST['qcsnSearch']);
     $isShow            = intval($_POST['isShow']);
@@ -114,7 +111,7 @@ function insert_col($qsn = "")
     $sql = "insert into `" . $xoopsDB->prefix("jill_query_col") . "`
   (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`,`isLike`)
   values('{$qsn}' , '{$_POST['qc_title']}' , '{$qcsnSearch}','{$search_operator}','{$isShow}','{$qcSort}','{$isLike}')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or Utility::web_error($sql);
 
     //取得最後新增資料的流水編號
     $qcsn = $xoopsDB->getInsertId();
@@ -134,7 +131,7 @@ function delete_jill_query_col($qcsn = '')
 
     $sql = "delete from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qcsn` = '{$qcsn}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
 }
 
@@ -143,7 +140,7 @@ function jill_query_col_max_sort($qsn = "")
 {
     global $xoopsDB;
     $sql        = "select max(`qcSort`) from `" . $xoopsDB->prefix("jill_query_col") . "` where `qsn`=$qsn";
-    $result     = $xoopsDB->query($sql) or web_error($sql);
+    $result     = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($sort) = $xoopsDB->fetchRow($result);
     return ++$sort;
 }
@@ -158,7 +155,7 @@ function get_jill_query_col_value_qcsn($qcsn = "")
 
     $sql = "select * from `" . $xoopsDB->prefix("jill_query_col_value") . "` where `qcsn`='{$qcsn}'";
     //die($sql);
-    $result   = $xoopsDB->query($sql) or web_error($sql);
+    $result   = $xoopsDB->query($sql) or Utility::web_error($sql);
     $data_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {
         $ssn            = $data['ssn'];

@@ -16,7 +16,7 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $isAdmin                      = true;
 $xoopsOption['template_main'] = 'jill_query_adm_import.tpl';
@@ -32,9 +32,9 @@ function import_excel()
         redirect_header("import.php", 3, _MD_JILLQUERY_NOFILE);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    include_once TADTOOLS_PATH . '/PHPExcel/IOFactory.php';
+    include_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php';
     if (preg_match('/\.(xlsx)$/i', $_FILES['excel']['name'])) {
         $reader = PHPExcel_IOFactory::createReader('Excel2007');
         $title  = str_replace('.xlsx', '', $_FILES['excel']['name']);
@@ -72,7 +72,7 @@ function import_excel()
         '1',
         '{$uid}'
     )";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql);
     //取得最後新增資料的流水編號
     $qsn      = $xoopsDB->getInsertId();
     $qcsn_arr = array();
@@ -95,7 +95,7 @@ function import_excel()
                 $sql = "insert into `" . $xoopsDB->prefix("jill_query_col") . "`
                 (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`)
                 values('{$qsn}' , '{$qc_title}' , '{$qcsnSearch}','or','1','{$col}')";
-                $xoopsDB->queryF($sql) or web_error($sql);
+                $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
                 //取得最後新增資料的流水編號
                 $qcsn = $xoopsDB->getInsertId();
@@ -118,14 +118,14 @@ function import_excel()
             }
 
             $sql = "insert into `" . $xoopsDB->prefix("jill_query_sn") . "` (`qsn`,`createDate`,`qrSort`,`uid`) values('{$qsn}','{$now}',$row-1,'{$uid}')";
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or Utility::web_error($sql);
             //取得最後新增資料的流水編號
             $ssn = $xoopsDB->getInsertId();
 
             foreach ($cells as $col => $val) {
                 $val = $myts->addSlashes($val);
                 $sql = "insert into `" . $xoopsDB->prefix("jill_query_col_value") . "` (`ssn`, `qcsn`, `fillValue`) values('{$ssn}',{$qcsn_arr[$col]} ,'{$val}' )";
-                $xoopsDB->queryF($sql) or web_error($sql);
+                $xoopsDB->queryF($sql) or Utility::web_error($sql);
             }
         }
     }

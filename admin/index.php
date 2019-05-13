@@ -1,6 +1,5 @@
 <?php
 /**
- * Jill Query module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,25 +8,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright  The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license    http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package    Jill Query
- * @since      2.5
- * @author     jill lee(tnjaile@gmail.com)
- * @version    $Id $
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package
+ * @since        2.5.0
+ * @author
+ * @version      $Id $
  **/
-require_once '../../../include/cp_header.php';
-include 'header.php';
-include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
-$index_admin = new ModuleAdmin();
+require __DIR__ . '/header.php';
 
-$index_admin->addConfigLabel(_AM_XDIR_CONFIG_CHECK);
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo("min_php"), 'php');
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo("min_xoops"), 'xoops');
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-echo $index_admin->addNavigation('index.php');
-echo $index_admin->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
 
-include "footer.php";
+require __DIR__ . '/footer.php';
 xoops_cp_footer();

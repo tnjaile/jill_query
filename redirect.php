@@ -9,7 +9,7 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
-
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 include "header.php";
 include_once XOOPS_ROOT_PATH . "/header.php";
@@ -23,27 +23,27 @@ function redirect_query($qsn, $k)
     if (empty($qsn) || empty($k)) {
         return;
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $k    = $myts->addSlashes($k);
 
     $sql = "select qcsn from `" . $xoopsDB->prefix("jill_query_col") . "`
             where `qsn` = '{$qsn}' && `qcsnSearch`='1'";
-    $result     = $xoopsDB->query($sql) or web_error($sql);
+    $result     = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($qcsn) = $xoopsDB->fetchRow($result);
 
     $sql2 = "select ssn from `" . $xoopsDB->prefix("jill_query_col_value") . "`
     where `qcsn`='{$qcsn}' && `fillValue`='{$k}' ";
-    $result2   = $xoopsDB->query($sql2) or web_error($sql2);
+    $result2   = $xoopsDB->query($sql2) or Utility::web_error($sql2);
     list($ssn) = $xoopsDB->fetchRow($result2);
     // die($sql2);
     $sql3 = "select qcsn from `" . $xoopsDB->prefix("jill_query_col") . "`
             where `qsn` = '{$qsn}' && `isUrl`='1'";
-    $result3        = $xoopsDB->query($sql3) or web_error($sql3);
+    $result3        = $xoopsDB->query($sql3) or Utility::web_error($sql3);
     list($qcsn_url) = $xoopsDB->fetchRow($result3);
 
     $sql4 = "select fillValue from `" . $xoopsDB->prefix("jill_query_col_value") . "`
     where `qcsn`='{$qcsn_url}' && `ssn`='{$ssn}' ";
-    $result4 = $xoopsDB->query($sql4) or web_error($sql4);
+    $result4 = $xoopsDB->query($sql4) or Utility::web_error($sql4);
     // die($sql4);
     list($redirect) = $xoopsDB->fetchRow($result4);
     // die(var_dump($redirect));
@@ -67,6 +67,6 @@ if ($query_arr['ispublic'] == '2') {
 /*---判斷動作請貼在上方---*/
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign("toolbar", Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 include_once XOOPS_ROOT_PATH . '/footer.php';
