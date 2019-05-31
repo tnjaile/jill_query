@@ -18,6 +18,9 @@
  **/
 
 use XoopsModules\Jill_query\Update;
+if (!class_exists('XoopsModules\Jill_query\Update')) {
+    include dirname(__DIR__) . '/preloads/autoloader.php';
+}
 function xoops_module_update_jill_query($module, $old_version)
 {
     if (Update::chk_chk1()) {
