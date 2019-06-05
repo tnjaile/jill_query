@@ -48,18 +48,19 @@ foreach ($ssn_arr as $ssn) {
     }
     $i++;
 }
-//匯出
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename=' . $query_arr['title'] . '.xlsx');
-header('Cache-Control: max-age=0');
-// 避免excel下載錯誤訊息
-for ($i = 0; $i < ob_get_level(); $i++) {
-    ob_end_flush();
-}
-ob_implicit_flush(1);
+//匯出
 ob_clean();
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="' . $query_arr['title'] . '.xlsx"');
+header('Cache-Control: max-age=0');
+// 避免excel下載錯誤訊息(若數據大時加上)
+// for ($i = 0; $i < ob_get_level(); $i++) {
+//     ob_end_flush();
+// }
+// ob_implicit_flush(1);
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');
 exit;
