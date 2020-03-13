@@ -25,11 +25,19 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 class Update
 {
+
+    public function del_interface()
+    {
+        if (file_exists(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php')) {
+            unlink(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php');
+        }
+    }
+
     //檢查某欄位是否存在
     public function chk_chk1()
     {
         global $xoopsDB;
-        $sql    = "select `passwd` from " . $xoopsDB->prefix("jill_query");
+        $sql = "select `passwd` from " . $xoopsDB->prefix("jill_query");
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -41,7 +49,7 @@ class Update
     public function chk_chk5()
     {
         global $xoopsDB;
-        $sql    = "select `isLike` from " . $xoopsDB->prefix("jill_query_col");
+        $sql = "select `isLike` from " . $xoopsDB->prefix("jill_query_col");
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -62,7 +70,7 @@ class Update
     public function chk_chk2()
     {
         global $xoopsDB;
-        $sql    = "select `ispublic` from " . $xoopsDB->prefix("jill_query");
+        $sql = "select `ispublic` from " . $xoopsDB->prefix("jill_query");
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -75,7 +83,7 @@ class Update
     public function chk_chk3()
     {
         global $xoopsDB;
-        $sql    = "select `uid` from " . $xoopsDB->prefix("jill_query_sn");
+        $sql = "select `uid` from " . $xoopsDB->prefix("jill_query_sn");
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -88,7 +96,7 @@ class Update
     public function chk_chk4()
     {
         global $xoopsDB;
-        $sql    = "show columns from " . $xoopsDB->prefix("jill_query") . " where Field='editorEmail' && Type='varchar(255)' ";
+        $sql = "show columns from " . $xoopsDB->prefix("jill_query") . " where Field='editorEmail' && Type='varchar(255)' ";
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;

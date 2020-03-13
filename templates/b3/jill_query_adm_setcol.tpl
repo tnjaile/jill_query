@@ -1,6 +1,6 @@
 <link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
-<a href="../index.php?qsn=<{$qsn}>"><h1><{$queryArr.title}></h1></a>
+<a href="../index.php?qsn=<{$qsn}>"><h2><{$queryArr.title}></h2></a>
   <{if $now_op=="list_col"}>
     <{$jill_query_col_jquery_ui}>
     <{$formValidator_code}>

@@ -20,7 +20,7 @@
 
     <{else}>
       <div class="jumbotron">
-        <h1><{$smarty.const._MD_NOFORM}></h1>
+        <h2><{$smarty.const._MD_NOFORM}></h2>
       </div>
   <{/if}>
 <{elseif $now_op=="public_query"}>
@@ -51,7 +51,7 @@
   <{if $all_col}>
     <{$formValidator_code}>
 
-    <h1>
+    <h2>
 
       <a name="result" href="<{$xoops_url}>/modules/jill_query/index.php" ><i class="fa fa-reply" style="filter:alpha(opacity=30);-moz-opacity:0.3;opacity: 0.3;"></i> <{$query_arr.title}></a>
 
@@ -73,7 +73,7 @@
         </div>
       <{/if}>
 
-    </h1>
+    </h2>
 
     <{if $query_arr.directions}>
       <div class="alert alert-success">
@@ -89,7 +89,7 @@
     <{/if}>
   <{else}>
     <div class="jumbotron">
-      <h1><{$smarty.const._MD_JILLQUERY_EMPTY_SEARCH}></h1>
+      <h2><{$smarty.const._MD_JILLQUERY_EMPTY_SEARCH}></h2>
     </div>
   <{/if}>
 
@@ -123,7 +123,7 @@
 
     <{else}>
       <div class="jumbotron">
-        <h1><{$smarty.const._MD_JILLQUERY_NODATA}></h1>
+        <h2><{$smarty.const._MD_JILLQUERY_NODATA}></h2>
       </div>
     <{/if}>
   <{/if}>

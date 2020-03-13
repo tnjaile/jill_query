@@ -1,7 +1,7 @@
 <link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
 
-  <h1><{$smarty.const._MA_JILLQUERY_IMPORT_TITLE}></h1>
+  <h2><{$smarty.const._MA_JILLQUERY_IMPORT_TITLE}></h2>
 
   <div class="alert alert-info">
     <ol>

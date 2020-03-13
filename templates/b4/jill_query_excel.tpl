@@ -2,7 +2,7 @@
 
 <!--列出所有資料-->
 <{if $now_op=="list_data"}>
-    <h1><a href="<{$xoops_url}>/modules/jill_query/index.php"><i class="fa fa-reply"></i> <{$query_arr.title}></a></h1>
+    <h2><a href="<{$xoops_url}>/modules/jill_query/index.php"><i class="fa fa-reply"></i> <{$query_arr.title}></a></h2>
     <hr>
     <h2><{$smarty.const._MD_JILLQUERY_STEP}> 1<{$smarty.const._TAD_FOR}>
     <a href="excel_sample.php?qsn=<{$qsn}>">
