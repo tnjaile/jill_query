@@ -170,3 +170,23 @@ function get_value_of_cell($cell = "")
 
     return $value;
 }
+
+//抓取群組名
+function get_groupname($group_id)
+{
+    $group_handler = xoops_gethandler('group');
+    $groupname     = $group_handler->get($group_id)->name();
+    return $groupname;
+}
+
+//抓取所有群組(除訪客外)
+function get_all_groups($filterOutKeys = array())
+{
+
+    $member_handler = xoops_gethandler('member');
+    $group_list     = $member_handler->getGroupList();
+    // $filterOutKeys  = array(3);
+    $group_list = array_diff_key($group_list, array_flip($filterOutKeys));
+    // die(var_dump($group_list));
+    return $group_list;
+}

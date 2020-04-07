@@ -17,6 +17,8 @@
  * @version    $Id $
  **/
 xoops_loadLanguage('admin_common', 'tadtools');
+
+define('_MA_JILLQUERY_READ_GROUP', '可讀群組');
 define('_MA_JILLQUERY_ISPUBLIC', '公開');
 define('_MA_JILLQUERY_ISPUBLIC_DESC', '是否公開');
 define('_MA_JILLQUERY_ISLIKE', '啟用關鍵字查詢');

@@ -72,7 +72,11 @@ function jill_query_form($qsn = '')
     $xoopsTpl->assign('passwd', $passwd);
     //設定 ispublic 欄位的預設值
     $ispublic = !isset($DBV['ispublic']) ? '0' : $DBV['ispublic'];
-    $xoopsTpl->assign('ispublic', $ispublic);
+    //設定 read_group 欄位的預設值
+    $read_group = !isset($DBV['read_group']) ? array(2) : json_decode($DBV['read_group'], true);
+    $xoopsTpl->assign('read_group', $read_group);
+    $all_group = get_all_groups();
+    $xoopsTpl->assign('all_group', $all_group);
     $op = empty($qsn) ? "insert_jill_query" : "update_jill_query";
     //$op = "replace_jill_query";
 
@@ -120,6 +124,7 @@ function insert_jill_query()
     $isEnable    = intval($_POST['isEnable']);
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
+    $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
     $uid = !empty($_POST['uid']) ? intval($_POST['uid']) : $uid;
@@ -131,7 +136,8 @@ function insert_jill_query()
         `isEnable`,
         `uid`,
         `passwd`,
-        `ispublic`
+        `ispublic`,
+        `read_group`
     ) values(
         '{$title}',
         '{$directions}',
@@ -139,7 +145,8 @@ function insert_jill_query()
         '{$isEnable}',
         '{$uid}',
         '{$passwd}',
-        '{$ispublic}'
+        '{$ispublic}',
+        '{$read_group}'
     )";
     //die($sql);
     $xoopsDB->query($sql) or Utility::web_error($sql);
@@ -173,6 +180,7 @@ function update_jill_query($qsn = '')
     $isEnable    = intval($_POST['isEnable']);
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
+    $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
     //取得使用者編號
     $uid = $xoopsUser->uid();
 
@@ -183,7 +191,8 @@ function update_jill_query($qsn = '')
        `isEnable` = '{$isEnable}',
        `uid` = '{$uid}',
        `passwd` = '{$passwd}',
-       `ispublic` = '{$ispublic}'
+       `ispublic` = '{$ispublic}',
+       `read_group` = '{$read_group}'
     where `qsn` = '$qsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
@@ -245,12 +254,19 @@ function show_one_jill_query($qsn = '')
     }
 
     //過濾讀出的變數值
-    $title       = $myts->htmlSpecialChars($title);
-    $directions  = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
-    $editorEmail = $myts->htmlSpecialChars($editorEmail);
-    $counter     = $myts->displayTarea($counter, 1, 1, 0, 1, 0);
-    $passwd      = $myts->htmlSpecialChars($passwd);
-
+    $title          = $myts->htmlSpecialChars($title);
+    $directions     = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
+    $editorEmail    = $myts->htmlSpecialChars($editorEmail);
+    $counter        = $myts->displayTarea($counter, 1, 1, 0, 1, 0);
+    $passwd         = $myts->htmlSpecialChars($passwd);
+    $read_group_arr = json_decode($read_group, true);
+    if (empty($read_group_arr)) {
+        $read_group_name = "";
+        foreach ($read_group_arr as $group_id) {
+            $read_group_name .= get_groupname($group_id) . " | ";
+        }
+        $xoopsTpl->assign('read_group_name', $read_group_name);
+    }
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('title', $title);
     $xoopsTpl->assign('directions', $directions);
@@ -318,12 +334,21 @@ function list_jill_query()
         $all_content[$i]['uid_name']    = $uid_name;
         $all_content[$i]['passwd']      = $passwd;
         $all_content[$i]['ispublic']    = $ispublic;
-        $data_total                     = count_jill_query_sn($qsn);
-        $all_content[$i]['total']       = (empty($data_total)) ? _MD_JILLQUERY_NODATA : $data_total;
-        $all_content[$i]['cols']        = count_jill_query_col_qsn($qsn);
+        $read_group_arr                 = json_decode($read_group, true);
+        if (!empty($read_group_arr)) {
+            $all_content[$i]['read_group_name'] = "";
+            foreach ($read_group_arr as $group_id) {
+                $all_content[$i]['read_group_name'] .= get_groupname($group_id) . " | ";
+            }
+        } else {
+            $all_content[$i]['read_group_name'] = "尚未指定";
+        }
+        $data_total               = count_jill_query_sn($qsn);
+        $all_content[$i]['total'] = (empty($data_total)) ? _MD_JILLQUERY_NODATA : $data_total;
+        $all_content[$i]['cols']  = count_jill_query_col_qsn($qsn);
         $i++;
     }
-    //die(var_dump($all_content));
+    // die(var_dump($all_content));
     //刪除確認的JS
     $sweet_alert_obj        = new SweetAlert();
     $delete_jill_query_func = $sweet_alert_obj->render('delete_jill_query_func',

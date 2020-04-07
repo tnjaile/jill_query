@@ -78,14 +78,31 @@
               </div>
           </div>
         </div>
+
+        <!--可讀群組-->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label text-md-right">
+            <{$smarty.const._MA_JILLQUERY_READ_GROUP}>
+          </label>
+          <div class="col-sm-10">
+            <select name="read_group[]" class="form-control" size='10' multiple>
+              <{foreach from=$all_group key=r item=read}>
+                <option value=<{$r}> <{if $r|in_array:$read_group}>selected<{/if}> >
+                  <{$read}>
+                </option>
+              <{/foreach}>
+            </select>
+          </div>
+        </div>
+
         <!--瀏覽人數-->
         <div class="form-group row">
           <label class="col-sm-2 col-form-label text-md-right">
             <{$smarty.const._MA_JILLQUERY_COUNTER}>
           </label>
-          <div class="col-sm-10">
+          <label class="col-sm-10 col-form-label">
             <{$counter}>
-          </div>
+          </label>
         </div>
 
         <div class="text-center">
@@ -182,27 +199,26 @@
         <thead>
           <tr>
 
-            <th class="col-sm-2">
-              <!--名稱-->
-              <{$smarty.const._MA_JILLQUERY_TITLE}>
+            <th>
+              <!--名稱--><!--資料數-->
+              <{$smarty.const._MA_JILLQUERY_TITLE}>(<{$smarty.const._MA_JILLQUERY_AMOUNT}>)
             </th>
-            <th class="col-sm-1">
-              <!--資料數-->
-              <{$smarty.const._MA_JILLQUERY_AMOUNT}>
+            <th>
+              <{$smarty.const._MA_JILLQUERY_READ_GROUP}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--密碼-->
               <{$smarty.const._MA_JILLQUERY_PASSWD}>
             </th>
-            <th class="col-sm-2">
+            <th>
               <!--承辦人Email-->
               <{$smarty.const._MA_JILLQUERY_EDITOREMAIL}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--是否啟用-->
               <{$smarty.const._MA_JILLQUERY_ISENABLE}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--是否公開-->
               <{$smarty.const._MA_JILLQUERY_ISPUBLIC}>
             </th>
@@ -217,13 +233,12 @@
             <tr id="tr_<{$data.qsn}>">
 
               <td>
-                <!--名稱-->
-                <a href="../index.php?qsn=<{$data.qsn}>"><{$data.title}></a>
+                <!--名稱--><!--資料數-->
+                <a href="../index.php?qsn=<{$data.qsn}>"><{$data.title}></a>(<a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>)
               </td>
 
               <td style="text-align: right;">
-                <!--資料數-->
-                <a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>
+                <{$data.read_group_name}>
               </td>
               <td style="text-align: right;">
                 <!--密碼-->
