@@ -39,6 +39,11 @@ function search($qsn = '')
         redirect_header("index.php", 3, _MD_JILLQUERY_EMPTYQSN);
     }
 
+    // 是否有權限
+    if (!group_perm($query_arr['read_group'])) {
+        redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
+    }
+
     add_jill_query_counter($qsn);
     $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
@@ -147,6 +152,11 @@ function show_result($qsn = "")
 
     if (isset($_POST['passwd']) && $_POST['passwd'] != $query_arr['passwd']) {
         redirect_header($_SERVER["HTTP_REFERER"], 3, _MD_JILLQUERY_PASSWDERROR);
+    }
+
+    // 是否有權限
+    if (!group_perm($query_arr['read_group'])) {
+        redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
     }
 
     $title_arr = get_jill_query_allcol_qsn($qsn);
@@ -270,6 +280,12 @@ function public_query($qsn)
         redirect_header("{$_SERVER['PHP_SELF']}", 3, _MD_JILLQUERY_PUBLICERROR);
         exit;
     }
+
+    // 是否有權限
+    if (!group_perm($query_arr['read_group'])) {
+        redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
+    }
+
     $option = get_public_menu_options($qsn);
 
     $title_arr = get_jill_query_allcol_qsn($qsn);
@@ -327,7 +343,7 @@ switch ($op) {
         if (empty($qsn)) {
             list_jill_query();
         } else {
-            $query_arr = get_jill_query($qsn);
+            // $query_arr = get_jill_query($qsn);
             search($qsn);
         }
         break;

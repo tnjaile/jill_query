@@ -49,7 +49,7 @@ class Update
     public static function go_update6()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query") . " ADD `read_group` varchar(255) DEFAULT '\"1\"' COLLATE 'utf8_general_ci' NOT NULL COMMENT '可讀群組'";
+        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query") . " ADD `read_group` varchar(255) DEFAULT '\"2\"' COLLATE 'utf8_general_ci' NOT NULL COMMENT '可讀群組'";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
         return true;
     }

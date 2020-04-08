@@ -190,3 +190,25 @@ function get_all_groups($filterOutKeys = array())
     // die(var_dump($group_list));
     return $group_list;
 }
+
+//檢查是否具有權限
+function group_perm($haystack_groups)
+{
+    global $xoopsUser, $isAdmin;
+    if ($xoopsUser) {
+        if ($isAdmin) {
+            return true;
+            exit;
+        }
+
+        $haystack_groups = json_decode($haystack_groups, true);
+        $needle_groups   = array_unique($xoopsUser->groups());
+
+        foreach ($needle_groups as $key => $group) {
+            if (in_array($group, $haystack_groups)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
