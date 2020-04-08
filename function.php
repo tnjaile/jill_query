@@ -195,19 +195,24 @@ function get_all_groups($filterOutKeys = array())
 function group_perm($haystack_groups)
 {
     global $xoopsUser, $isAdmin;
+    $haystack_groups = json_decode($haystack_groups, true);
     if ($xoopsUser) {
         if ($isAdmin) {
             return true;
             exit;
         }
 
-        $haystack_groups = json_decode($haystack_groups, true);
-        $needle_groups   = array_unique($xoopsUser->groups());
+        $needle_groups = array_unique($xoopsUser->groups());
 
         foreach ($needle_groups as $key => $group) {
             if (in_array($group, $haystack_groups)) {
                 return true;
             }
+        }
+    } else {
+        // 訪客可讀取
+        if (in_array(3, $haystack_groups)) {
+            return true;
         }
     }
     return false;
