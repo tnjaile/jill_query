@@ -99,7 +99,7 @@ function import_excel($qsn = "")
     $qcsn_arr  = array_keys($title_arr);
     $count     = count_jill_query_col_qsn($qsn);
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
     if (preg_match('/\.(xlsx)$/i', $_FILES['excel']['name'])) {
         $reader = PHPExcel_IOFactory::createReader('Excel2007');
     } else {

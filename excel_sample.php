@@ -2,9 +2,9 @@
 include_once '../../mainfile.php';
 include_once 'function.php';
 //引入 PHPExcel 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
 //引入 PHPExcel_IOFactory 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 
 $qsn       = (empty($_GET['qsn'])) ? '' : intval($_GET['qsn']);
 $query_arr = get_jill_query($qsn);

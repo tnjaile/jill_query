@@ -3,9 +3,9 @@ use XoopsModules\Tadtools\Utility;
 include_once "header.php";
 include_once '../function.php';
 //引入 PHPExcel 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php';
-//引入 PHPExcel_IOFactory 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
+//引入PHPExcel_IOFactory 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 
 $qsn = (empty($_GET['qsn'])) ? '' : intval($_GET['qsn']);
 // if (!get_undertaker($qsn)) {
@@ -55,10 +55,10 @@ header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetm
 header('Content-Disposition: attachment;filename="' . $query_arr['title'] . '.xlsx"');
 header('Cache-Control: max-age=0');
 // 避免excel下載錯誤訊息(若數據大時加上)
-// for ($i = 0; $i < ob_get_level(); $i++) {
-//     ob_end_flush();
-// }
-// ob_implicit_flush(1);
+for ($i = 0; $i < ob_get_level(); $i++) {
+    ob_end_flush();
+}
+ob_implicit_flush(1);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
