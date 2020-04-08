@@ -73,7 +73,7 @@
                 <label class="form-check-label" for="ispublic_1"><{$smarty.const._YES}></label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="ispublic" id="ispublic_0" value="0" <{if $ispublic == "0"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="ispublic" id="ispublic_0" value="0" <{if $ispublic == "0"  || $ispublic == ""}>checked="checked"<{/if}>>
                 <label class="form-check-label" for="ispublic_0"><{$smarty.const._NO}></label>
               </div>
           </div>

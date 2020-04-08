@@ -73,7 +73,7 @@ function jill_query_form($qsn = '')
     //設定 ispublic 欄位的預設值
     $ispublic = !isset($DBV['ispublic']) ? '0' : $DBV['ispublic'];
     //設定 read_group 欄位的預設值
-    $read_group = !isset($DBV['read_group']) ? array(2) : json_decode($DBV['read_group'], true);
+    $read_group = !isset($DBV['read_group']) ? array(2, 3) : json_decode($DBV['read_group'], true);
     $xoopsTpl->assign('read_group', $read_group);
     $all_group = get_all_groups();
     $xoopsTpl->assign('all_group', $all_group);
@@ -383,13 +383,17 @@ function copy_cols($qsn = "")
         `directions`,
         `editorEmail`,
         `isEnable`,
-        `uid`
+        `uid`,
+        `ispublic`,
+        `read_group`
     ) values(
         'copy_{$sourceArr['title']}',
         '{$sourceArr['directions']}',
         '{$editorEmail}',
         '1',
-        '{$uid}'
+        '{$uid}',
+        '0',
+        '{$sourceArr['read_group']}'
     )";
     //die($sql);
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
