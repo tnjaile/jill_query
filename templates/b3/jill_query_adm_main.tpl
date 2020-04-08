@@ -78,7 +78,7 @@
               </label>
           </div>
         </div>
-        <!--可讀群組-->
+        <!--可讀取群組-->
         <div class="form-group">
           <label class="col-sm-2 control-label">
             <{$smarty.const._MA_JILLQUERY_READ_GROUP}>
