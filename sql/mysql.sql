@@ -8,7 +8,7 @@ CREATE TABLE `jill_query` (
   `uid` mediumint(8) unsigned NOT NULL COMMENT '開設者帳號',
   `passwd` varchar(255) NOT NULL COMMENT '密碼',
   `ispublic` enum('0','1') NOT NULL COMMENT '是否公開',
-  `read_group` varchar(255) NOT NULL DEFAULT '[\"3\"]' COMMENT '可讀取群組',
+  `read_group` varchar(255) NOT NULL DEFAULT '[\"2\",\"3\"]' COMMENT '可讀取群組',
   PRIMARY KEY (`qsn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
