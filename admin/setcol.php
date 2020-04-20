@@ -16,9 +16,9 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
+use XoopsModules\Tadtools\Jeditable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-// use XoopsModules\Tadtools\Jeditable;
 /*-----------引入檔案區--------------*/
 $isAdmin                      = true;
 $xoopsOption['template_main'] = 'jill_query_adm_setcol.tpl';
@@ -34,8 +34,7 @@ function list_col($qsn = "")
     if (empty($queryArr)) {
         redirect_header("main.php", 3, _MA_JILLQUERY_EMPTYQSN);
     }
-    //jquery表單即點即編
-    // $jeditable = new new Jeditable();
+
     $myts = \MyTextSanitizer::getInstance();
     $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='$qsn' order by `qcSort`";
@@ -63,8 +62,6 @@ function list_col($qsn = "")
         $qc_title        = $myts->htmlSpecialChars($qc_title);
         $search_operator = $myts->htmlSpecialChars($search_operator);
 
-        // $jeditable->setTextCol("#qc_title{$qcsn}", 'setcol.php', '100%', '11pt', "{'qcsn':$qcsn,'op' : 'save_qc_title'}", _TAD_EDIT . _MA_JILLQUERY_QC_TITLE);
-
         $all_content[$i]['qcsn']          = $qcsn;
         $all_content[$i]['qsn']           = $qsn;
         $all_content[$i]['title']         = $queryArr['title'];
@@ -75,15 +72,22 @@ function list_col($qsn = "")
         $all_content[$i]['isShow'] = $isShow;
         $all_content[$i]['isLike'] = $isLike;
         $all_content[$i]['qcSort'] = $qcSort;
-        $all_content[$i]['qcinfo'] = get_jill_query_col_value_qcsn($qcsn);
+
+        $qcinfo                      = get_jill_query_col_value_qcsn($qcsn);
+        $all_content[$i]['show_del'] = (empty($qcinfo)) ? 1 : "";
         $i++;
     }
-    //die(var_dump($all_content));
+    // die(var_dump($all_content));
     //刪除確認的JS
     $sweet_alert_obj            = new SweetAlert();
     $delete_jill_query_col_func = $sweet_alert_obj->render('delete_jill_query_col_func',
         "{$_SERVER['PHP_SELF']}?op=delete_jill_query_col&qsn=$qsn&qcsn=", "qcsn");
     $xoopsTpl->assign('delete_jill_query_col_func', $delete_jill_query_col_func);
+
+    //jquery表單即點即編
+    $jeditable = new Jeditable();
+    $jeditable->setTextCol(".qc_title", 'save_qc_title.php', '80%', '1.5em', "", _TAD_EDIT . _MA_JILLQUERY_QC_TITLE);
+    $jeditable->render();
 
     $xoopsTpl->assign('jill_query_col_jquery_ui', Utility::get_jquery(true));
     $xoopsTpl->assign('qsn', $qsn);

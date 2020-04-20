@@ -56,7 +56,7 @@
                 <tr id='tr_<{$data.qcsn}>'>
                   <td style="text-align: center;">
                     <!--標題-->
-                    <div id="qc_title_<{$data.qcsn}>"><{$data.qc_title}></div>
+                    <div class="qc_title" id="qc_title:<{$data.qcsn}>"><{$data.qc_title}></div>
                   </td>
                   <td style="text-align: center;">
                     <{$data.qcsnSearch}>
@@ -69,7 +69,7 @@
                   </td>
                   <td style="text-align: center;">
                     <img src='<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png' style='cursor: s-resize;margin:0px 4px;' alt='<{$smarty.const._TAD_SORTABLE}>' title='<{$smarty.const._TAD_SORTABLE}>'>
-                    <{if $data.qcinfo==""}>
+                    <{if $data.show_del}>
                       <a href="javascript:delete_jill_query_col_func(<{$data.qcsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                     <{/if}>
                   </td>
@@ -86,6 +86,9 @@
             </td>
             <td style="text-align: center;">
               <input type="checkbox" name="isShow" class="form-control" value="1" >
+            </td>
+            <td style="text-align: center;">
+              <input type="checkbox" name="isLike" class="form-control" value="1" >
             </td>
             <td>
               <input type="hidden" name="qsn" value="<{$qsn}>">
