@@ -32,7 +32,7 @@ $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
 $modversion['status_version']      = '2.3';
-$modversion['release_date']        = '2020-04-08';
+$modversion['release_date']        = '2020-04-20';
 $modversion['module_website_url']  = 'https://github.com/tnjaile/';
 $modversion['module_website_name'] = _MI_JILLQUERY_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
