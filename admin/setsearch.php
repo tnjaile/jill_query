@@ -18,6 +18,7 @@
  **/
 
 /*-----------引入檔案區--------------*/
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 // use XoopsModules\Tadtools\Jeditable;
 $xoopsOption['template_main'] = 'jill_query_adm_setsearch.tpl';
@@ -96,14 +97,13 @@ function update_searchcol($qsn = "")
     return $qsn;
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
-$qsn  = system_CleanVars($_REQUEST, 'qsn', '', 'int');
-$qcsn = system_CleanVars($_REQUEST, 'qcsn', '', 'int');
+$op   = Request::getString('op');
+$qsn  = Request::getInt('qsn');
+$qcsn = Request::getInt('qcsn');
 switch ($op) {
-    /*---判斷動作請貼在下方---*/
+/*---判斷動作請貼在下方---*/
 
-    //更新資料
+//更新資料
     case "update_searchcol":
         update_searchcol($qsn);
         header("location: {$_SERVER['PHP_SELF']}?qsn=$qsn");

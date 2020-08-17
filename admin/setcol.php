@@ -16,6 +16,7 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
+use Xmf\Request;
 use XoopsModules\Tadtools\Jeditable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -170,9 +171,8 @@ function get_jill_query_col_value_qcsn($qcsn = "")
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
-$qsn  = system_CleanVars($_REQUEST, 'qsn', '', 'int');
+$op   = Request::getString('op');
+$qsn  = Request::getInt('qsn');
 $qcsn = system_CleanVars($_REQUEST, 'qcsn', '', 'int');
 switch ($op) {
 /*---判斷動作請貼在下方---*/

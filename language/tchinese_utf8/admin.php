@@ -74,4 +74,3 @@ define('_MA_JILLQUERY_PASSWD', '設定查詢密碼');
 define('_MA_JILLQUERY_EXPORT', '匯出EXCEL');
 define('_MD_JILLQUERY_SORT_FAIL', '更新失敗');
 define('_MD_JILLQUERY_SORTED', '更新成功');
-define('_MD_JILLQUERY_ILLEGAL', '無權限');

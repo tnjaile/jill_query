@@ -16,6 +16,7 @@
  * @author     jill lee(tnjaile@gmail.com)
  * @version    $Id $
  **/
+use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
@@ -411,25 +412,24 @@ function copy_cols($qsn = "")
     return $qsn;
 }
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op  = system_CleanVars($_REQUEST, 'op', '', 'string');
-$qsn = system_CleanVars($_REQUEST, 'qsn', '', 'int');
+$op  = Request::getString('op');
+$qsn = Request::getInt('qsn');
 
 switch ($op) {
-    /*---判斷動作請貼在下方---*/
-    //新增資料
+/*---判斷動作請貼在下方---*/
+//新增資料
     case "copy_cols":
         $qsn = copy_cols($qsn);
         redirect_header("{$_SERVER['PHP_SELF']}?op=jill_query_form&qsn=$qsn", 3, _MA_JILLQUERY_COPYSUCCESS);
         exit;
 
-    //新增資料
+//新增資料
     case "insert_jill_query":
         $qsn = insert_jill_query();
         header("location: setcol.php?qsn=$qsn");
         exit;
 
-    //更新資料
+//更新資料
     case "update_jill_query":
         update_jill_query($qsn);
         header("location: setcol.php?qsn=$qsn");
