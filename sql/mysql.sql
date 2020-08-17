@@ -13,13 +13,13 @@ CREATE TABLE `jill_query` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `jill_query_col` (
-  `qcsn` smallint(6) unsigned NOT NULL AUTO_INCREMENT COMMENT '欄位編號',
+  `qcsn` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '欄位編號',
   `qsn` int(10) unsigned NOT NULL COMMENT '編號',
   `qc_title` varchar(255) NOT NULL COMMENT '欄位名稱',
   `qcsnSearch` enum('1','0') NOT NULL COMMENT '搜尋欄位',
   `search_operator` varchar(255) NOT NULL DEFAULT 'or' COMMENT '搜尋運算符',
   `isShow` enum('1','0') NOT NULL DEFAULT '1' COMMENT '顯示欄位',
-  `qcSort` smallint(6) NOT NULL COMMENT '排序欄位',
+  `qcSort` int(10) NOT NULL COMMENT '排序欄位',
   `isLike` enum('0','1') NOT NULL DEFAULT '0' COMMENT '啟用關鍵字查詢',
   PRIMARY KEY (`qcsn`)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
