@@ -173,7 +173,7 @@ function get_jill_query_col_value_qcsn($qcsn = "")
 /*-----------執行動作判斷區----------*/
 $op   = Request::getString('op');
 $qsn  = Request::getInt('qsn');
-$qcsn = system_CleanVars($_REQUEST, 'qcsn', '', 'int');
+$qcsn = Request::getInt('qcsn');
 switch ($op) {
 /*---判斷動作請貼在下方---*/
 
