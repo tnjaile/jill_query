@@ -17,7 +17,7 @@
         <hr>
       </div>
     <{/foreach}>
-
+    <{$bar}>
     <{else}>
       <div class="jumbotron">
         <h2><{$smarty.const._MD_NOFORM}></h2>

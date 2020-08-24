@@ -20,7 +20,7 @@ include "header.php";
 include_once 'function_block.php';
 $op  = Request::getString('op');
 $qsn = Request::getInt('qsn');
-$ssn = system_CleanVars($_REQUEST, 'ssn', '', 'int');
+$ssn = Request::getInt('ssn');
 
 if (!get_undertaker($qsn)) {
     redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
