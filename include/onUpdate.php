@@ -22,6 +22,7 @@ use XoopsModules\Jill_query\Update;
 if (!class_exists('XoopsModules\Jill_query\Update')) {
     include dirname(__DIR__) . '/preloads/autoloader.php';
 }
+
 function xoops_module_update_jill_query($module, $old_version)
 {
     if (Update::chk_chk1()) {
@@ -45,6 +46,11 @@ function xoops_module_update_jill_query($module, $old_version)
     if (Update::chk_chk7()) {
         Update::go_update7();
     }
+
+    if (Update::chk_chk8()) {
+        Update::go_update8();
+    }
+
     Update::del_interface();
     return true;
 }

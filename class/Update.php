@@ -35,6 +35,28 @@ class Update
         }
     }
 
+    //檢查qcsn 欄位為第一
+    public static function chk_chk8()
+    {
+        global $xoopsDB;
+        $sql                    = "SELECT ORDINAL_POSITION from information_schema.`COLUMNS` where `TABLE_NAME`='" . $xoopsDB->prefix("jill_query_col") . "' && `COLUMN_NAME`='qcsn' ";
+        $result                 = $xoopsDB->query($sql) or Utility::web_error($sql);
+        list($ORDINAL_POSITION) = $xoopsDB->fetchRow($result);
+        if ($ORDINAL_POSITION == '1') {
+            return false;
+        }
+        return true;
+    }
+
+    //修正qcsn 欄位為第一
+    public static function go_update8()
+    {
+        global $xoopsDB;
+        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query_col") . " CHANGE `qcsn` `qcsn` int(10) unsigned NOT NULL COMMENT '編號' AUTO_INCREMENT FIRST,
+        CHANGE `qsn` `qsn` int(10) unsigned NOT NULL COMMENT '編號' AFTER `qcsn` ";
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
+        return true;
+    }
     //檢查qcsn 欄位 smallint(6)是否存在
     public static function chk_chk7()
     {
@@ -51,7 +73,7 @@ class Update
     public static function go_update7()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query_col") . " CHANGE `qcsn` `qcsn` int(10) unsigned NOT NULL COMMENT '編號' AFTER `qsn` ";
+        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query_col") . " CHANGE `qcsn` `qcsn` int(10) unsigned NOT NULL COMMENT '編號' AUTO_INCREMENT FIRST ";
         $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
         $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query_col") . " CHANGE `qcSort` `qcSort` int(10) unsigned NOT NULL COMMENT '排序欄位' AFTER `isShow` ";
