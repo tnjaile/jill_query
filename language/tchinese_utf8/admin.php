@@ -74,3 +74,18 @@ define('_MA_JILLQUERY_PASSWD', '設定查詢密碼');
 define('_MA_JILLQUERY_EXPORT', '匯出EXCEL');
 define('_MD_JILLQUERY_SORT_FAIL', '更新失敗');
 define('_MD_JILLQUERY_SORTED', '更新成功');
+
+//tag.php
+define('_MA_JILLQUERY_TAG_TITLE', '標籤');
+define('_MA_JILLQUERY_TAG_FONTCOLOR', '文字顏色');
+define('_MA_JILLQUERY_TAG_COLOR', '顏色');
+define('_MA_JILLQUERY_TAG_ENABLE', '是否使用');
+define('_MA_JILLQUERY_TAG_DEMO', '範例');
+define('_MA_JILLQUERY_TAG_FUNC', '功能');
+define('_MA_JILLQUERY_TAG_NEW', '新標籤');
+define('_MA_JILLQUERY_TAG_ABLE', '啟用');
+define('_MA_JILLQUERY_TAG_UNABLE', '關閉');
+define('_MA_JILLQUERY_TAG_AMOUNT', '，有 %s 篇文章使用此標籤');
+define('_MA_JILLQUERY_NO_PERMISSION', '當沒有讀取權限時');
+define('_MA_JILLQUERY_HIDE_ARTICLE', '完全隱藏文章');
+define('_MA_JILLQUERY_DISPLAY_TITLE', '僅顯示標題');

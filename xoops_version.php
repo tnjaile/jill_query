@@ -90,6 +90,10 @@ $modversion['templates'][$i]['file']        = 'jill_query_adm_import.tpl';
 $modversion['templates'][$i]['description'] = 'jill_query_adm_import.tpl for bootstrap3';
 
 $i++;
+$modversion['templates'][$i]['file']        = 'jill_query_adm_tag.tpl';
+$modversion['templates'][$i]['description'] = 'jill_query_adm_tag.tpl for bootstrap3';
+
+$i++;
 $modversion['templates'][$i]['file']        = 'jill_query_index.tpl';
 $modversion['templates'][$i]['description'] = 'jill_query_index.tpl';
 
