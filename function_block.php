@@ -73,7 +73,9 @@ if (!function_exists("get_jill_query_col_fillValue_qsn")) {
         where `ssn` = '{$ssn}' && `qcsn`='{$qcsn}' ";
         $result          = $xoopsDB->query($sql) or Utility::web_error($sql);
         list($fillValue) = $xoopsDB->fetchRow($result);
+
         if (substr(trim($fillValue), 0, 4) == "http") {
+
             $fillValue = "<a href='{$fillValue}' target='_blank'>{$fillValue}</a>";
         }
         return $fillValue;

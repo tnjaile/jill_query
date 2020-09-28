@@ -18,6 +18,9 @@
  **/
 
 xoops_loadLanguage('modinfo_common', 'tadtools');
+
+define('_MI_JILLQUERY_ADMENU3', '標籤管理');
+define('_MI_JILLQUERY_ADMENU3_DESC', '為查詢資料做分類標籤。');
 define('_MI_JILLQUERY_NAME', '簡易查詢系統');
 define('_MI_JILLQUERY_AUTHOR', 'tnjaile@gmail.com');
 define('_MI_JILLQUERY_CREDITS', 'tad');

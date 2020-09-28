@@ -36,7 +36,13 @@ $i++;
 $adminmenu[$i]['title'] = _MI_JILLQUERY_ADMENU2;
 $adminmenu[$i]['link']  = 'admin/import.php';
 $adminmenu[$i]['desc']  = _MI_JILLQUERY_ADMENU2_DESC;
-$adminmenu[$i]['icon']  = "{$icon_dir}query.png";
+$adminmenu[$i]['icon']  = "{$icon_dir}import.png";
+
+$i++;
+$adminmenu[$i]['title'] = _MI_JILLQUERY_ADMENU3;
+$adminmenu[$i]['link']  = 'admin/tag.php';
+$adminmenu[$i]['desc']  = _MI_JILLQUERY_ADMENU3_DESC;
+$adminmenu[$i]['icon']  = "{$icon_dir}tag.png";
 
 $i++;
 $adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
