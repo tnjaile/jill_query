@@ -86,5 +86,5 @@ define('_MA_JILLQUERY_TAG_FUNC', '功能');
 define('_MA_JILLQUERY_TAG_NEW', '新標籤');
 define('_MA_JILLQUERY_TAG_ABLE', '啟用');
 define('_MA_JILLQUERY_TAG_UNABLE', '關閉');
-define('_MA_JILLQUERY_TAG_AMOUNT', '，有 %s 篇文章使用此標籤');
+define('_MA_JILLQUERY_TAG_AMOUNT', '，有 %s 筆查詢使用此標籤');
 define('_MA_JILLQUERY_NO_PERMISSION', '當沒有讀取權限時');
