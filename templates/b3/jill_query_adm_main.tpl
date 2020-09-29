@@ -93,6 +93,23 @@
             </select>
           </div>
         </div>
+
+        <!--標籤-->
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">
+            <{$smarty.const._MD_JILLQUERY_PREFIX_TAG}>
+          </label>
+          <div class="col-sm-10">
+            <select name="tag_sn" class="form-control">
+              <option value=''><{$smarty.const._MD_JILLQUERY_PREFIX_TAG}></option>
+              <{foreach from=$tag_opt key=sn item=tag}>
+                <option value=<{$sn}> <{if $sn==$tag_sn}>selected<{/if}> >
+                  <{$tag}>
+                </option>
+              <{/foreach}>
+            </select>
+          </div>
+        </div>
         <!--瀏覽人數-->
         <div class="form-group">
           <label class="col-sm-2 control-label">
@@ -220,6 +237,10 @@
               <!--是否公開-->
               <{$smarty.const._MA_JILLQUERY_ISPUBLIC}>
             </th>
+            <th>
+              <!--標籤-->
+              <{$smarty.const._MA_JILLQUERY_TAG_TITLE}>
+            </th>
             <{if $isAdmin}>
               <th><{$smarty.const._TAD_FUNCTION}></th>
             <{/if}>
@@ -232,7 +253,10 @@
 
               <td>
                 <!--名稱--><!--資料數-->
-                <a href="../index.php?qsn=<{$data.qsn}>"><{$data.title}></a>(<a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>)
+                <{ if $data.cols!=''}>
+                    <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=copy_cols&qsn=<{$data.qsn}>" class="btn btn-xs btn-primary" title="<{$smarty.const._MA_JILLQUERY_COPY}>"><i class="fa fa-clone" aria-hidden="true"></i></a>
+                <{/if}>
+                <a href="../index.php?qsn=<{$data.qsn}>"> <{$data.title}></a>(<a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>)
               </td>
 
               <td style="text-align: right;">
@@ -255,6 +279,10 @@
                 <!--是否公開-->
                 <{$data.ispublic}>
               </td>
+              <td>
+                <!--標籤-->
+                <a href="#" class="jq_tag" data-name="tag_sn" data-type="select" data-pk="<{$data.qsn}>" data-title="<{$data.tag_title}>" data-source='<{$tag_opt}>' data-value="<{$data.tag_sn}>" data-params="{op: 'update_tag'}"><{$data.tag_title}></a>
+              </td>
               <{if $isAdmin}>
                 <td>
                   <a href="javascript:delete_jill_query_func(<{$data.qsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
@@ -262,7 +290,6 @@
                   <a href="<{$xoops_url}>/modules/jill_query/admin/setcol.php?qsn=<{$data.qsn}>" class="btn btn-xs btn-success"><{$smarty.const._MA_JILLQUERY_SETCOL}></a>
                   <a href="<{$xoops_url}>/modules/jill_query/admin/setsearch.php?qsn=<{$data.qsn}>" class="btn btn-xs btn-info"><{$smarty.const._MA_JILLQUERY_SETSEARCH}></a>
                   <{ if $data.cols!=''}>
-                    <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=copy_cols&qsn=<{$data.qsn}>" class="btn btn-xs btn-primary"><{$smarty.const._MA_JILLQUERY_COPY}></a>
                     <a href="<{$xoops_url}>/modules/jill_query/admin/export.php?qsn=<{$data.qsn}>" class="btn btn-xs btn-primary"><{$smarty.const._MA_JILLQUERY_EXPORT}></a>
                   <{/if}>
                 </td>
@@ -287,6 +314,6 @@
         </div>
       <{/if}>
     <{/if}>
+    <{$Bootstrap3EditableCode}>
   <{/if}>
-
 </div>

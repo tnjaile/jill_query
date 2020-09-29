@@ -42,8 +42,10 @@ function list_jill_query_tags($def_tag_sn = '')
     $xoopsTpl->assign('tag', $tag);
     $xoopsTpl->assign('font_color', $font_color);
     $xoopsTpl->assign('color', $color);
-    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new \XoopsFormHiddenToken();
+    //加入Token安全機制
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token      = new \XoopsFormHiddenToken();
+    $token_form = $token->render();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
     $MColorPicker = new MColorPicker('.color');
     $MColorPicker->render();
@@ -56,7 +58,7 @@ function insert_jill_query_tags()
 {
     global $xoopsDB;
 
-    //安全判斷
+    // //安全判斷
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);

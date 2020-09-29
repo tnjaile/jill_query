@@ -17,6 +17,7 @@
  * @version    $Id $
  **/
 use Xmf\Request;
+use XoopsModules\Tadtools\Bootstrap3Editable;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
@@ -78,6 +79,12 @@ function jill_query_form($qsn = '')
     $xoopsTpl->assign('read_group', $read_group);
     $all_group = get_all_groups();
     $xoopsTpl->assign('all_group', $all_group);
+    //設定 tag_sn 欄位的預設值
+    $tag_sn = !isset($DBV['tag_sn']) ? '' : $DBV['tag_sn'];
+    $xoopsTpl->assign('tag_sn', $tag_sn);
+    $tag_opt = tag_menu();
+    $xoopsTpl->assign('tag_opt', $tag_opt);
+
     $op = empty($qsn) ? "insert_jill_query" : "update_jill_query";
     //$op = "replace_jill_query";
 
@@ -126,6 +133,7 @@ function insert_jill_query()
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
     $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+    $tag_sn      = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
     $uid = !empty($_POST['uid']) ? intval($_POST['uid']) : $uid;
@@ -138,7 +146,8 @@ function insert_jill_query()
         `uid`,
         `passwd`,
         `ispublic`,
-        `read_group`
+        `read_group`,
+        `tag_sn`
     ) values(
         '{$title}',
         '{$directions}',
@@ -147,7 +156,8 @@ function insert_jill_query()
         '{$uid}',
         '{$passwd}',
         '{$ispublic}',
-        '{$read_group}'
+        '{$read_group}',
+        '{$tag_sn}'
     )";
     //die($sql);
     $xoopsDB->query($sql) or Utility::web_error($sql);
@@ -182,6 +192,8 @@ function update_jill_query($qsn = '')
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
     $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+    $tag_sn      = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
+
     //取得使用者編號
     $uid = $xoopsUser->uid();
 
@@ -193,8 +205,10 @@ function update_jill_query($qsn = '')
        `uid` = '{$uid}',
        `passwd` = '{$passwd}',
        `ispublic` = '{$ispublic}',
-       `read_group` = '{$read_group}'
+       `read_group` = '{$read_group}',
+       `tag_sn` = '{$tag_sn}'
     where `qsn` = '$qsn'";
+    // die($sql);
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
     return $qsn;
@@ -292,8 +306,9 @@ function list_jill_query()
     global $xoopsDB, $xoopsTpl, $isAdmin;
 
     $myts = \MyTextSanitizer::getInstance();
-
-    $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "` order by isEnable desc,qsn desc";
+    // 取得所有標籤名
+    $tag_opt = tag_menu();
+    $sql     = "select * from `" . $xoopsDB->prefix("jill_query") . "` order by isEnable desc,qsn desc";
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
@@ -335,6 +350,8 @@ function list_jill_query()
         $all_content[$i]['uid_name']    = $uid_name;
         $all_content[$i]['passwd']      = $passwd;
         $all_content[$i]['ispublic']    = $ispublic;
+        $all_content[$i]['tag_sn']      = $tag_sn;
+        $all_content[$i]['tag_title']   = empty($tag_sn) ? _MA_JILLQUERY_TAG_SET : $tag_opt[$tag_sn];
         $read_group_arr                 = json_decode($read_group, true);
         if (!empty($read_group_arr)) {
             $all_content[$i]['read_group_name'] = "";
@@ -349,6 +366,13 @@ function list_jill_query()
         $all_content[$i]['cols']  = count_jill_query_col_qsn($qsn);
         $i++;
     }
+
+    // 點擊編輯
+    $Bootstrap3Editable     = new Bootstrap3Editable();
+    $Bootstrap3EditableCode = $Bootstrap3Editable->render('.jq_tag', 'main_ajax.php');
+    $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
+    $tag_opt = array(0 => '無標籤') + $tag_opt;
+    $xoopsTpl->assign('tag_opt', json_encode($tag_opt, 256));
     // die(var_dump($all_content));
     //刪除確認的JS
     $sweet_alert_obj        = new SweetAlert();
@@ -386,7 +410,8 @@ function copy_cols($qsn = "")
         `isEnable`,
         `uid`,
         `ispublic`,
-        `read_group`
+        `read_group`,
+        `tag_sn`
     ) values(
         'copy_{$sourceArr['title']}',
         '{$sourceArr['directions']}',
@@ -394,7 +419,8 @@ function copy_cols($qsn = "")
         '1',
         '{$uid}',
         '0',
-        '{$sourceArr['read_group']}'
+        '{$sourceArr['read_group']}',
+        '{$sourceArr['tag_sn']}'
     )";
     //die($sql);
     $xoopsDB->queryF($sql) or Utility::web_error($sql);

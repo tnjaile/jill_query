@@ -21,7 +21,21 @@
 xoops_loadLanguage('main', 'tadtools');
 include_once XOOPS_ROOT_PATH . "/modules/jill_query/function_block.php";
 /********************* 自訂函數 *********************/
+//標籤下拉選單
+function tag_menu()
+{
+    global $xoopsDB;
 
+    $sql    = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('jill_query_tags') . " WHERE `enable`='1'";
+    $result = $xoopsDB->query($sql);
+    $option = '';
+    while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
+
+        $option[$tag_sn] = $tag;
+    }
+
+    return $option;
+}
 //以流水號取得某筆jill_query_col資料
 function get_jill_query_col($qcsn = '')
 {
