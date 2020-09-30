@@ -1,6 +1,20 @@
 <{$toolbar}>
 <!--列出所有資料-->
 <{if $now_op=="list_jill_query"}>
+  <div class="alert alert-primary">
+    <div class="form-check-inline radio-inline">
+      <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="tag_sn" id="tag_0" value="" onClick="location.href='<{$action}>'" <{if $tag_sn ==''}>checked="checked"<{/if}>><{$smarty.const._MD_JILLQUERY_ALL}>
+      </label>
+    </div>
+    <{foreach from=$tag_opt key=t item=tag}>
+      <div class="form-check-inline radio-inline">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="tag_sn" id="tag_<{$t}>" value="<{$t}>" onClick="location.href='<{$action}>?tag_sn='+this.value"" <{if $tag_sn == $t}>checked="checked"<{/if}>><{$tag}>
+        </label>
+      </div>
+    <{/foreach}>
+  </div>
   <{if $all_content}>
     <{foreach from=$all_content item=data}>
       <div class="row">
@@ -18,7 +32,7 @@
       </div>
     <{/foreach}>
     <{$bar}>
-    <{else}>
+  <{else}>
       <div class="jumbotron">
         <h2><{$smarty.const._MD_NOFORM}></h2>
       </div>

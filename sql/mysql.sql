@@ -9,7 +9,7 @@ CREATE TABLE `jill_query` (
   `passwd` varchar(255) NOT NULL COMMENT '密碼',
   `ispublic` enum('0','1') NOT NULL COMMENT '是否公開',
   `read_group` varchar(255) NOT NULL DEFAULT '[\"2\",\"3\"]' COMMENT '可讀取群組',
-  `tag_sn` smallint(5) UNSIGNED NOT NULL,
+  `tag_sn` smallint(5) UNSIGNED NOT NULL COMMENT '標籤編號',
   PRIMARY KEY (`qsn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -46,11 +46,11 @@ CREATE TABLE `jill_query_col_value` (
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `jill_query_tags` (
-  `tag_sn` smallint(5) UNSIGNED NOT NULL auto_increment,
-  `tag` varchar(255) NOT NULL default '',
-  `font_color` varchar(255) NOT NULL default '',
-  `color` varchar(255) NOT NULL default '',
-  `enable` enum('0','1') NOT NULL default '1',
+  `tag_sn` smallint(5) UNSIGNED NOT NULL auto_increment COMMENT '標籤編號',
+  `tag` varchar(255) NOT NULL default ''  COMMENT '標籤',
+  `font_color` varchar(255) NOT NULL default '' COMMENT '文字顏色',
+  `color` varchar(255) NOT NULL default '' COMMENT '顏色',
+  `enable` enum('0','1') NOT NULL default '1' COMMENT '是否啟用',
   PRIMARY KEY  (`tag_sn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

@@ -214,26 +214,26 @@
         <thead>
           <tr>
 
-            <th class="col-sm-2">
+            <th>
               <!--名稱--><!--資料數-->
               <{$smarty.const._MA_JILLQUERY_TITLE}>(<{$smarty.const._MA_JILLQUERY_AMOUNT}>)
             </th>
-            <th class="col-sm-1">
+            <th>
               <{$smarty.const._MA_JILLQUERY_READ_GROUP}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--密碼-->
               <{$smarty.const._MA_JILLQUERY_PASSWD}>
             </th>
-            <th class="col-sm-2">
+            <th>
               <!--承辦人Email-->
               <{$smarty.const._MA_JILLQUERY_EDITOREMAIL}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--是否啟用-->
               <{$smarty.const._MA_JILLQUERY_ISENABLE}>
             </th>
-            <th class="col-sm-1">
+            <th>
               <!--是否公開-->
               <{$smarty.const._MA_JILLQUERY_ISPUBLIC}>
             </th>
@@ -256,7 +256,7 @@
                 <{ if $data.cols!=''}>
                     <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=copy_cols&qsn=<{$data.qsn}>" class="btn btn-xs btn-primary" title="<{$smarty.const._MA_JILLQUERY_COPY}>"><i class="fa fa-clone" aria-hidden="true"></i></a>
                 <{/if}>
-                <a href="../index.php?qsn=<{$data.qsn}>"> <{$data.title}></a>(<a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>)
+                <a href="../index.php?qsn=<{$data.qsn}>"> <{$data.title}>(<{$data.total}>)</a>
               </td>
 
               <td style="text-align: right;">

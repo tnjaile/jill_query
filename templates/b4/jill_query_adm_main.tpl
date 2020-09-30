@@ -258,7 +258,7 @@
                     <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=copy_cols&qsn=<{$data.qsn}>" class="btn btn-xs btn-primary" title="<{$smarty.const._MA_JILLQUERY_COPY}>"><i class="fa fa-clone" aria-hidden="true"></i></a>
                 <{/if}>
                 <!--名稱--><!--資料數-->
-                <a href="../index.php?qsn=<{$data.qsn}>"><{$data.title}></a>(<a href="../excel.php?qsn=<{$data.qsn}>"><{$data.total}></a>)
+                <a href="../index.php?qsn=<{$data.qsn}>"><{$data.title}>(<{$data.total}>)</a>
               </td>
 
               <td style="text-align: right;">
