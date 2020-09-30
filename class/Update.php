@@ -35,6 +35,53 @@ class Update
         }
     }
 
+    //檢查tag_sn 欄位 smallint(5)是否存在
+    public static function chk_chk10()
+    {
+        global $xoopsDB;
+        $sql    = 'SELECT count(`tag_sn`) FROM ' . $xoopsDB->prefix('jill_query');
+        $result = $xoopsDB->query($sql);
+        if (empty($result)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function go_update10()
+    {
+        global $xoopsDB;
+        $sql = 'ALTER TABLE ' . $xoopsDB->prefix('jill_query') . " ADD `tag_sn` SMALLINT(5) UNSIGNED NOT NULL  COMMENT '標籤編號'  AFTER `read_group` ";
+        $xoopsDB->queryF($sql);
+    }
+
+    //新增標籤
+    public static function chk_chk9()
+    {
+        global $xoopsDB;
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('jill_query_tags');
+        $result = $xoopsDB->query($sql);
+        if (empty($result)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function go_update9()
+    {
+        global $xoopsDB;
+        $sql = "CREATE TABLE " . $xoopsDB->prefix('jill_query_tags') . " (
+            `tag_sn` smallint(5) UNSIGNED NOT NULL auto_increment COMMENT '標籤編號',
+            `tag` varchar(255) NOT NULL default ''  COMMENT '標籤',
+            `font_color` varchar(255) NOT NULL default '' COMMENT '文字顏色',
+            `color` varchar(255) NOT NULL default '' COMMENT '顏色',
+            `enable` enum('0','1') NOT NULL default '1' COMMENT '是否啟用',
+            PRIMARY KEY  (`tag_sn`)
+        )";
+        $xoopsDB->queryF($sql);
+    }
+
     //檢查qcsn 欄位為第一
     public static function chk_chk8()
     {

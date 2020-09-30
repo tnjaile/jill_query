@@ -371,7 +371,7 @@ function list_jill_query()
     $Bootstrap3Editable     = new Bootstrap3Editable();
     $Bootstrap3EditableCode = $Bootstrap3Editable->render('.jq_tag', 'main_ajax.php');
     $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
-    $tag_opt = array(0 => '無標籤') + $tag_opt;
+    $tag_opt[0] = _MA_JILLQUERY_TAG_SET;
     $xoopsTpl->assign('tag_opt', json_encode($tag_opt, 256));
     // die(var_dump($all_content));
     //刪除確認的JS

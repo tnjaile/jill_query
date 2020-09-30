@@ -50,7 +50,13 @@ function xoops_module_update_jill_query($module, $old_version)
     if (Update::chk_chk8()) {
         Update::go_update8();
     }
+    if (!Update::chk_chk9()) {
+        Update::go_update9();
+    }
 
+    if (!Update::chk_chk10()) {
+        Update::go_update10();
+    }
     Update::del_interface();
     return true;
 }

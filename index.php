@@ -102,7 +102,7 @@ function list_jill_query()
 
     $and_tag = empty($_GET['tag_sn']) ? "" : "&& tag_sn='{$_GET['tag_sn']}'";
     $sql     = "select * from `" . $xoopsDB->prefix("jill_query") . "` where isEnable='1' $and_tag order by qsn desc ";
-    $PageBar = Utility::getPageBar($sql, 1, 10);
+    $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];

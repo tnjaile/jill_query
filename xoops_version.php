@@ -62,7 +62,7 @@ $modversion['tables'][1]        = "jill_query";
 $modversion['tables'][2]        = "jill_query_col";
 $modversion['tables'][3]        = "jill_query_col_value";
 $modversion['tables'][4]        = "jill_query_sn";
-
+$modversion['tables'][5]        = "jill_query_tags";
 //---管理介面設定---//
 $modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = "admin/main.php";

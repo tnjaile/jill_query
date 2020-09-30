@@ -281,7 +281,7 @@
               </td>
               <td>
                 <!--標籤-->
-                <a href="#" class="jq_tag" data-name="tag_sn" data-type="select" data-pk="<{$data.qsn}>" data-title="<{$data.tag_title}>" data-source='<{$tag_opt}>' data-value="<{$data.tag_sn}>" data-params="{op: 'update_tag'}"><{$data.tag_title}></a>
+                <a href="#" class="jq_tag" data-name="tag_sn" data-type="select" data-pk="<{$data.qsn}>" data-title="<{$data.tag_title}>" data-source='<{$tag_opt}>' data-value='<{$data.tag_sn}>' data-params="{op: 'update_tag'}"><{$data.tag_title}></a>
               </td>
               <{if $isAdmin}>
                 <td>
