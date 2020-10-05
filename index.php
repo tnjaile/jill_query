@@ -117,7 +117,11 @@ function list_jill_query()
         foreach ($all as $k => $v) {
             $$k = $v;
         }
-
+        // 過濾權限
+        // 是否有權限
+        if (!group_perm($read_group)) {
+            continue;
+        }
         //將是/否選項轉換為圖示
         $isEnable = $isEnable == 1 ? '<img src="' . XOOPS_URL . '/modules/jill_query/images/yes.gif" alt="' . _YES . '" title="' . _YES . '">' : '<img src="' . XOOPS_URL . '/modules/jill_query/images/no.gif" alt="' . _NO . '" title="' . _NO . '">';
 

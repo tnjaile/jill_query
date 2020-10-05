@@ -28,13 +28,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 class Update
 {
 
-    public static function del_interface()
-    {
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php')) {
-            unlink(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php');
-        }
-    }
-
     //檢查tag_sn 欄位 smallint(5)是否存在
     public static function chk_chk10()
     {
@@ -257,4 +250,10 @@ class Update
         return true;
     }
 
+    public static function del_interface()
+    {
+        if (file_exists(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php')) {
+            unlink(XOOPS_ROOT_PATH . '/modules/jill_query/interface_menu.php');
+        }
+    }
 }

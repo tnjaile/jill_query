@@ -29,8 +29,8 @@ function tag_menu()
     $sql    = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('jill_query_tags') . " WHERE `enable`='1'";
     $result = $xoopsDB->query($sql);
     $option = '';
-    while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
 
+    while (list($tag_sn, $tag, $read_group) = $xoopsDB->fetchRow($result)) {
         $option[$tag_sn] = $tag;
     }
 
