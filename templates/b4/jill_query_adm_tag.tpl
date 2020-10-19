@@ -65,7 +65,7 @@
                 <input type="hidden" name="tag_sn" value="<{$tag_sn}>">
                 <input type="hidden" name="op" value="update_jill_query_tags">
                 <{$XOOPS_TOKEN}>
-                <button class="btn btn-sm btn-primary" type="submit"><{$smarty.const._MA_JILLQUERY_SAVE_CATE}></button>
+                <button class="btn btn-sm btn-primary" type="submit"><{$smarty.const._TAD_SAVE}></button>
                 </td></tr>
             <{else}>
                 <tr>
