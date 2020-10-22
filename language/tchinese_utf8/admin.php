@@ -79,7 +79,7 @@ define('_MD_JILLQUERY_SORTED', '更新成功');
 define('_MA_JILLQUERY_TAG_SET', '無標籤');
 define('_MA_JILLQUERY_TAG_TITLE', '標籤');
 define('_MA_JILLQUERY_TAG_FONTCOLOR', '文字顏色');
-define('_MA_JILLQUERY_TAG_COLOR', '顏色');
+define('_MA_JILLQUERY_TAG_COLOR', '背景顏色');
 define('_MA_JILLQUERY_TAG_ENABLE', '是否啟用');
 define('_MA_JILLQUERY_TAG_DEMO', '範例');
 define('_MA_JILLQUERY_TAG_FUNC', '功能');

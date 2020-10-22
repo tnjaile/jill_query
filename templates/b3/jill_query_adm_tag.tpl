@@ -71,9 +71,9 @@
                 <td><{$tag.color}></td>
                 <td><{$tag.enable_txt}><{$tag.amount}></td>
                 <td>
-                    <a href='tag.php?tag_sn=<{$tag.tag_sn}>' class='btn btn-info'><{$smarty.const._TAD_EDIT}></a>
+                    <a href='tag.php?tag_sn=<{$tag.tag_sn}>' class='btn btn-warning'><{$smarty.const._TAD_EDIT}></a>
                     <{if $tag.enable}>
-                        <a href='tag.php?op=stat&enable=0&tag_sn=<{$tag.tag_sn}>' class='btn btn-warning'><{$smarty.const._MA_JILLQUERY_TAG_UNABLE}></a>
+                        <a href='tag.php?op=stat&enable=0&tag_sn=<{$tag.tag_sn}>' class='btn btn-primary'><{$smarty.const._MA_JILLQUERY_TAG_UNABLE}></a>
                     <{else}>
                         <a href='tag.php?op=stat&enable=1&tag_sn=<{$tag.tag_sn}>' class='btn btn-success'><{$smarty.const._MA_JILLQUERY_TAG_ABLE}></a>
                     <{/if}>
