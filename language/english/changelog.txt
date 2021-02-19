@@ -1,0 +1,79 @@
+[Module Origin]
+
+This module provides managers to import EXCEL files, and general users can query personal records by filling in data. Uses such as: results query, admission list, etc.
+
+【Module Features】
+
+1. Multiple query events can be set in the background.
+2. Set the EXCEL field for the query event in the background, and provide two methods for searching the field.
+3. The background also provides direct import to Excel to create query data, and the "search field" can be automatically set in the first row of field names.
+4. The front desk provides visitors with direct inquiry.
+5. The front desk provides the undertaker to import the information, and the administrator does not need to do it.
+6. The project block can be queried at present.
+
+【installation method】
+
+1. Unzip the module and upload the jill_query directory to modules
+2. Enter the background to install the module.
+
+【History Update】
+jill_query version 2.42 released on October 22, 2020
+ =================================================
+1. Fix the label display error
+jill_query version 2.41 released on 2020-10-05
+ =================================================
+1. Homepage query by authority
+jill_query 2.40 version 2020-09-30 released
+ =================================================
+1. New label classification
+jill_query 2.32 version 2020-08-26 released
+ =================================================
+1. Solve the problem that the qcsn field is set incorrectly and is not in the first row
+jill_query 2.31 version 2020-08-17 released
+ =================================================
+1. Solve the problem of too small qcsn field
+jill_query version 2.3 released on 2020-04-20
+ =================================================
+1. Increase the readable group
+2. Click to edit the field name in the background
+jill_query 2.2.1 version 2020-03-13 released
+ =================================================
+1. Accessibility 2.0
+jill_query 2.20 version 2019-05-13 released
+ =================================================
+ 1. Fix that data cannot be captured when exporting excel in the background
+ 2. Fix the new version of PHPEXCEL cannot export EXCEL
+ 3. Fully support XoopsModules\Tadtools\Utility
+jill_query 2.10 version 2019-01-17 released
+ =================================================
+ 1. Support Bootstrap 4.0
+jill_query version 2.02 2018-09-13 released
+ =================================================
+ 1. Directly add hyperlink label after excel import URL
+jill_query version 2.01 2017-10-24 released
+ =================================================
+ 1. Modify the data imported by multiple different contractors to view and modify the data of others
+jill_query version 2.0 2017-10-06 released
+ =================================================
+ 1. Support PHP7.1
+ 2. In the background, multiple inquiries with the same content can be established with different contractors.
+ 3. Search by keyword field
+jill_query version 1.31 released on 2017-09-11
+ =================================================
+ 1. Increase the public information block
+jill_query version 1.21 2017-08-11 released
+ =================================================
+ 1. The manager adds the functions of copying query and exporting EXCEL
+ 2. Add the function of entering the query password
+jill_query 1.12 version 2017-05-01 released
+ =================================================
+ 1. Fix the problem that the undertaker cannot update the modified field
+jill_query version 1.11 released 2017-04-24
+ =================================================
+ 1. Fix the problem that the background setting field cannot be sorted
+jill_query version 1.1 released on 2017-04-12
+ =================================================
+ 1. Fix that the organizer cannot import EXCEL
+jill_query version 1.0 released on 2017-01-17
+ =================================================
+ 1. Officially released
