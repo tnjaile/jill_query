@@ -165,6 +165,7 @@ function show_result($qsn = "")
     if (empty($_POST['fillValue'])) {
         return;
     }
+
     // die("ads" . var_dump($_POST['fillValue']));
     $query_arr = get_jill_query($qsn);
 
