@@ -25,6 +25,7 @@
             <h3>
               <a class="btn btn-info" href="<{$action}>?qsn=<{$data.qsn}>">
                 <i class="fa fa-search fa-lg fa-flip-horizontal" aria-hidden="true"></i>
+                <span class="sr-only">search</span>
               </a>
               <a href="<{$action}>?qsn=<{$data.qsn}>"><{$data.title}></a>
             </h3>
