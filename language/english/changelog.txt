@@ -17,6 +17,10 @@ This module provides managers to import EXCEL files, and general users can query
 2. Enter the background to install the module.
 
 【History Update】
+jill_query version 2.43 released on 2021-08-19
+ =================================================
+1. Conformance level AA
+1. Fix the label display error
 jill_query version 2.42 released on October 22, 2020
  =================================================
 1. Fix the label display error
