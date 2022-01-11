@@ -169,13 +169,22 @@ function show_result($qsn = "")
     // die("ads" . var_dump($_POST['fillValue']));
     $query_arr = get_jill_query($qsn);
 
+    if (empty($query_arr['ispublic'])) {
+        redirect_header($_SERVER["HTTP_REFERER"], 3, _MD_JILLQUERY_CLOSED);
+        exit;
+
+    }
+
     if (isset($_POST['passwd']) && $_POST['passwd'] != $query_arr['passwd']) {
         redirect_header($_SERVER["HTTP_REFERER"], 3, _MD_JILLQUERY_PASSWDERROR);
+        exit;
+
     }
 
     // 是否有權限
     if (!group_perm($query_arr['read_group'])) {
         redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
+        exit;
     }
 
     $title_arr = get_jill_query_allcol_qsn($qsn);

@@ -22,6 +22,8 @@ define('_MD_JILLQUERY_PUBLICERROR', '此事件不公開查詢');
 define('_MD_JILLQUERY_PUBLICQUERY', '目前的查詢事件為：');
 define('_MD_JILLQUERY_PREFIX_TAG', '標籤');
 define('_MD_JILLQUERY_ALL', '全部');
+define('_MD_JILLQUERY_CLOSED', '查詢已關閉');
+
 //excel.php
 define('_MD_JILLQUERY_SAMPLE', '請先下載 <i class="fa fa-file-excel-o"></i> 範本檔');
 define('_MD_JILLQUERY_EMPTYQSN', '無此事件編號');
