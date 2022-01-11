@@ -21,7 +21,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_JILLQUERY_NAME;
-$modversion['version']     = '2.43';
+$modversion['version']     = '2.44';
 $modversion['description'] = _MI_JILLQUERY_DESC;
 $modversion['author']      = _MI_JILLQUERY_AUTHOR;
 $modversion['credits']     = _MI_JILLQUERY_CREDITS;
@@ -31,8 +31,8 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['status_version']      = '2.43';
-$modversion['release_date']        = '2021-08-19';
+$modversion['status_version']      = '2.44';
+$modversion['release_date']        = '2022-01-11';
 $modversion['module_website_url']  = 'https://github.com/tnjaile/';
 $modversion['module_website_name'] = _MI_JILLQUERY_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
