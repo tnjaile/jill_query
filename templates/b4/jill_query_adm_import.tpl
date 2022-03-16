@@ -8,6 +8,7 @@
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE1}></li>
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE2}></li>
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE3}></li>
+      <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE8}></li>
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE4}></li>
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE5}></li>
       <li><{$smarty.const._MA_JILLQUERY_IMPORT_NOTE6}></li>

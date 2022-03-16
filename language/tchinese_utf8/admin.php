@@ -18,6 +18,7 @@
  **/
 xoops_loadLanguage('admin_common', 'tadtools');
 
+define('_MA_JILLQUERY_IMPORT_NOTE8', '第一行欄位名稱前若加上「!」代表設定為「搜尋欄位是以登入的EMAIL查詢」。匯入後請記得到後台【資料管理】編輯為【以登入的EMAIL查詢】並儲存。');
 define('_MA_JILLQUERY_READ_GROUP', '可讀取群組');
 define('_MA_JILLQUERY_ISPUBLIC', '公開');
 define('_MA_JILLQUERY_ISPUBLIC_DESC', '是否公開');

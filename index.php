@@ -203,7 +203,9 @@ function show_result($qsn = "")
         $qcsn_arr        = array_keys($title_arr);
         $myts            = \MyTextSanitizer::getInstance();
         $search_operator = current($_POST['search_operator']);
+
         if ($search_operator == "and") {
+
             foreach ($_POST['fillValue'] as $qcsn => $fillValue) {
                 $fillValue = $myts->addSlashes($fillValue);
 
@@ -214,10 +216,12 @@ function show_result($qsn = "")
                 $ssn_arr[] = get_jill_query_col_value_ssn($qcsn, $fillValue);
             }
             //取交集
-            if (sizeof($ssn_arr) > 0) {
+            if (sizeof($ssn_arr) > 1) {
                 $ssn_arr = call_user_func_array('array_intersect', $ssn_arr);
+            } else {
+                $ssn_arr = $ssn_arr[0];
             }
-            //製造資料表
+            // die(var_dump($ssn_arr));
 
         } else {
 
@@ -228,8 +232,10 @@ function show_result($qsn = "")
                 $ssn_arr[] = get_jill_query_col_value_ssn($qcsn, $fillValue);
             }
             //取聯集
-            if (isset($ssn_arr) && sizeof($ssn_arr) > 0) {
+            if (isset($ssn_arr) && sizeof($ssn_arr) > 1) {
                 $ssn_arr = array_unique(call_user_func_array('array_merge', $ssn_arr));
+            } else {
+                $ssn_arr = $ssn_arr[0];
             }
         }
         if (isset($ssn_arr)) {
@@ -237,13 +243,13 @@ function show_result($qsn = "")
             foreach ($ssn_arr as $key => $ssn) {
                 foreach ($title_show_arr as $qcsn => $qc_arr) {
                     $all_content[$ssn][] = get_jill_query_col_fillValue_qsn($ssn, $qcsn);
+
                 }
             }
             $total = sizeof($ssn_arr);
             $xoopsTpl->assign('total', sprintf(_MD_JILLQUERY_TOTAL, $total));
         }
 
-        //die(var_dump($all_content));
         $xoopsTpl->assign('title_show_arr', $title_show_arr);
 
     }

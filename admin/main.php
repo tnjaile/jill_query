@@ -228,22 +228,14 @@ function update_jill_query($qsn = '')
         $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2);
         $cols    = $xoopsDB->fetchArray($result2);
         // die(var_dump($cols));
-        if (empty($cols)) {
-            $sql3 = "insert into `" . $xoopsDB->prefix("jill_query_col") . "`
-                (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`)
-                values('{$qsn}' , 'email' , '1','and','1','1')";
-            $xoopsDB->queryF($sql3) or Utility::web_error($sql3);
 
-        } else {
-            $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
+        $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
                     `qcsnSearch` = '1',
                     `search_operator` = 'and',
                     `isShow` = '1'
                     where `qsn` = '$qsn' && `qc_title`='email'";
-            // die($sql);
-            $xoopsDB->queryF($sql) or Utility::web_error($sql);
-
-        }
+        // die($sql);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
     }
 

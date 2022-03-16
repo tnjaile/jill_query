@@ -52,11 +52,15 @@ function list_col($qsn = "")
         $isShow = $isShow == 1 ? "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_isShow' onClick=\"change_enable($qcsn,'isShow');\" style='cursor: pointer;'>" : "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isShow' onClick=\"change_enable($qcsn,'isShow');\" style='cursor: pointer;'>";
 
         if ($qcsnSearch == 1) {
-            $qcsnSearch = "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_qcsnSearch' onClick=\"change_enable($qcsn,'qcsnSearch');\" style='cursor: pointer;'>";
+
             if ($queryArr['ispublic'] == 2 && $qc_title == 'email') {
+                $qcsnSearch = "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_qcsnSearch' style='cursor: pointer;'>";
+
                 $isLike = "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' style='cursor: pointer;'>";
 
             } else {
+                $qcsnSearch = "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_qcsnSearch' onClick=\"change_enable($qcsn,'qcsnSearch');\" style='cursor: pointer;'>";
+
                 $isLike = $isLike == 1 ? "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>" : "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>";
             }
 
