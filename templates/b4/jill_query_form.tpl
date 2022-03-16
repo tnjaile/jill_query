@@ -5,7 +5,12 @@
       <{$data.qc_title}>
     </label>
     <div class="col-sm-8">
-      <input type="text" class="form-control" name="fillValue[<{$data.qcsn}>]" <{if $data.search_operator=="and"}> class="validate[required]" placeholder="<{$smarty.const._MD_REQUIRED}>" <{else}> placeholder="<{$smarty.const._MD_OPTIONAL}>" <{/if}> title='optional'>
+      <{if $query_arr.ispublic==2 && $data.qc_title=='email'}>
+        <input class="form-control" type="text" value="<{$email}>" aria-label="email" disabled readonly>
+        <input type='hidden' name="fillValue[<{$data.qcsn}>]" value="<{$email}>">
+      <{else}>
+        <input type="text" class="form-control" name="fillValue[<{$data.qcsn}>]" <{if $data.search_operator=="and"}> class="validate[required]" placeholder="<{$smarty.const._MD_REQUIRED}>" <{else}> placeholder="<{$smarty.const._MD_OPTIONAL}>" <{/if}> title='optional'>
+      <{/if}>
       <input type='hidden' name="search_operator[<{$data.qcsn}>]" value="<{$data.search_operator}>">
     </div>
   </div>

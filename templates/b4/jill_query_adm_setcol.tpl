@@ -55,8 +55,12 @@
               <{foreach from=$all_content item=data}>
                 <tr id='tr_<{$data.qcsn}>'>
                   <td style="text-align: center;">
-                    <!--標題-->
-                    <div class="qc_title" id="qc_title:<{$data.qcsn}>"><{$data.qc_title}></div>
+                    <{if $queryArr.ispublic==2 && $data.qc_title=='email'}>
+                      <{$data.qc_title}>
+                    <{else}>
+                      <!--標題-->
+                      <div class="qc_title" id="qc_title:<{$data.qcsn}>"><{$data.qc_title}></div>
+                    <{/if}>
                   </td>
                   <td style="text-align: center;">
                     <{$data.qcsnSearch}>

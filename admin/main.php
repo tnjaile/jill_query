@@ -74,6 +74,7 @@ function jill_query_form($qsn = '')
     $xoopsTpl->assign('passwd', $passwd);
     //設定 ispublic 欄位的預設值
     $ispublic = !isset($DBV['ispublic']) ? '0' : $DBV['ispublic'];
+    $xoopsTpl->assign('ispublic', $ispublic);
     //設定 read_group 欄位的預設值
     $read_group = !isset($DBV['read_group']) ? array(2, 3) : json_decode($DBV['read_group'], true);
     $xoopsTpl->assign('read_group', $read_group);
@@ -132,8 +133,9 @@ function insert_jill_query()
     $isEnable    = intval($_POST['isEnable']);
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
-    $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
-    $tag_sn      = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
+    $read_group  = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+    // die(var_dump($read_group));
+    $tag_sn = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
     $uid = !empty($_POST['uid']) ? intval($_POST['uid']) : $uid;
@@ -165,6 +167,14 @@ function insert_jill_query()
     //取得最後新增資料的流水編號
     $qsn = $xoopsDB->getInsertId();
 
+    // 以登入email當搜尋
+    if ($ispublic == 2) {
+        $sql2 = "insert into `" . $xoopsDB->prefix("jill_query_col") . "`
+                (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`)
+                values('{$qsn}' , 'email' , '1','and','1','1')";
+        $xoopsDB->queryF($sql2) or Utility::web_error($sql2);
+
+    }
     return $qsn;
 }
 
@@ -191,8 +201,9 @@ function update_jill_query($qsn = '')
     $isEnable    = intval($_POST['isEnable']);
     $passwd      = $myts->addSlashes($_POST['passwd']);
     $ispublic    = intval($_POST['ispublic']);
-    $read_group  = json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
-    $tag_sn      = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
+    $read_group  = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+
+    $tag_sn = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
 
     //取得使用者編號
     $uid = $xoopsUser->uid();
@@ -210,6 +221,31 @@ function update_jill_query($qsn = '')
     where `qsn` = '$qsn'";
     // die($sql);
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
+    // 以登入email當搜尋
+    if ($ispublic == 2) {
+        $sql2 = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
+        where `qsn` = '{$qsn}' && `qc_title`='email' order by `qcSort`";
+        $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2);
+        $cols    = $xoopsDB->fetchArray($result2);
+        // die(var_dump($cols));
+        if (empty($cols)) {
+            $sql3 = "insert into `" . $xoopsDB->prefix("jill_query_col") . "`
+                (`qsn` , `qc_title` , `qcsnSearch`,`search_operator`,`isShow`,`qcSort`)
+                values('{$qsn}' , 'email' , '1','and','1','1')";
+            $xoopsDB->queryF($sql3) or Utility::web_error($sql3);
+
+        } else {
+            $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
+                    `qcsnSearch` = '1',
+                    `search_operator` = 'and',
+                    `isShow` = '1'
+                    where `qsn` = '$qsn' && `qc_title`='email'";
+            // die($sql);
+            $xoopsDB->queryF($sql) or Utility::web_error($sql);
+
+        }
+
+    }
 
     return $qsn;
 }
@@ -328,7 +364,16 @@ function list_jill_query()
 
         //將是/否選項轉換為圖示
         $isEnable = $isEnable == 1 ? '<img src="' . XOOPS_URL . '/modules/jill_query/images/yes.gif" alt="' . _YES . '" title="' . _YES . '">' : '<img src="' . XOOPS_URL . '/modules/jill_query/images/no.gif" alt="' . _NO . '" title="' . _NO . '">';
-        $ispublic = $ispublic == 1 ? '<img src="' . XOOPS_URL . '/modules/jill_query/images/yes.gif" alt="' . _YES . '" title="' . _YES . '">' : '<img src="' . XOOPS_URL . '/modules/jill_query/images/no.gif" alt="' . _NO . '" title="' . _NO . '">';
+
+        // $ispublic = $ispublic == 1 ? '<img src="' . XOOPS_URL . '/modules/jill_query/images/yes.gif" alt="' . _YES . '" title="' . _YES . '">' : '<img src="' . XOOPS_URL . '/modules/jill_query/images/no.gif" alt="' . _NO . '" title="' . _NO . '">';
+        if ($ispublic == 1) {
+            $ispublic = '<img src="' . XOOPS_URL . '/modules/jill_query/images/yes.gif" alt="' . _YES . '" title="' . _YES . '">';
+        } elseif ($ispublic == 2) {
+            $ispublic = '<i class="fa fa-envelope fa-lg" aria-hidden="true"></i>';
+        } else {
+            $ispublic = '<img src="' . XOOPS_URL . '/modules/jill_query/images/no.gif" alt="' . _NO . '" title="' . _NO . '">';
+
+        }
         //將 uid 編號轉換成使用者姓名（或帳號）
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         if (empty($uid_name)) {

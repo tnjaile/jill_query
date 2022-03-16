@@ -28,7 +28,7 @@ include_once XOOPS_ROOT_PATH . "/header.php";
 //查詢
 function search($qsn = '')
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl, $xoopsUser;
     // die('aa');
     if (empty($qsn)) {
         return;
@@ -90,6 +90,7 @@ function search($qsn = '')
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_col', $all_content);
     $xoopsTpl->assign('query_arr', $query_arr);
+    $xoopsTpl->assign('email', $xoopsUser->email());
     $xoopsTpl->assign('iseditAdm', get_undertaker($qsn));
 }
 

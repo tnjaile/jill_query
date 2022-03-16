@@ -7,7 +7,7 @@ CREATE TABLE `jill_query` (
   `counter` mediumint(8) unsigned NOT NULL COMMENT '瀏覽人數',
   `uid` mediumint(8) unsigned NOT NULL COMMENT '開設者帳號',
   `passwd` varchar(255) NOT NULL COMMENT '密碼',
-  `ispublic` enum('0','1') NOT NULL COMMENT '是否公開',
+  `ispublic` enum('0','1','2') NOT NULL COMMENT '是否公開',
   `read_group` varchar(255) NOT NULL DEFAULT '[\"2\",\"3\"]' COMMENT '可讀取群組',
   `tag_sn` smallint(5) UNSIGNED NOT NULL COMMENT '標籤編號',
   PRIMARY KEY (`qsn`)

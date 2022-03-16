@@ -13,15 +13,18 @@
               <input class="form-check-input" type="radio" name="search_operator" id="search_operator_1" value="and" <{if $def_search_operator == "and"}>checked="checked"<{/if}>>
               <label class="form-check-label" for="search_operator_1"><{$smarty.const._MA_JILLQUERY__OPERATOR_AND}><strong class="text-danger">(<{$smarty.const._FILL_ALL_FIELDS}>)</strong></label>
             </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="search_operator" id="search_operator_2" value="or" <{if $def_search_operator == "or"}>checked="checked"<{/if}>>
-              <label class="form-check-label" for="search_operator_2"><{$smarty.const._MA_JILLQUERY__OPERATOR_OR}><strong class="text-danger">(<{$smarty.const._FILL_ANY_FIELDS}>)</strong></label>
-            </div>
+            <{if $ispublic!=2}>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="search_operator" id="search_operator_2" value="or" <{if $def_search_operator == "or"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="search_operator_2"><{$smarty.const._MA_JILLQUERY__OPERATOR_OR}><strong class="text-danger">(<{$smarty.const._FILL_ANY_FIELDS}>)</strong></label>
+              </div>
+            <{/if}>
           </div>
 
           <div class="row ml-2" style="text-align: center;">
             <button type="submit" class="btn btn-primary"><{$smarty.const._MA_JILLQUERY_SETSEARCH}></button>
             <input type='hidden' name="qsn" value="<{$qsn}>">
+            <input type='hidden' name="ispublic" value="<{$ispublic}>">
             <input type="hidden" name="op" value="update_searchcol">
           </div>
         </form>

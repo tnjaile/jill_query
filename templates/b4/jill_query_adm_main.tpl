@@ -74,7 +74,11 @@
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="ispublic" id="ispublic_0" value="0" <{if $ispublic == "0"  || $ispublic == ""}>checked="checked"<{/if}>>
-                <label class="form-check-label" for="ispublic_0"><{$smarty.const._NO}></label>
+                <label class="form-check-label" for="ispublic_0"><{$smarty.const._MD_JILLQUERY_LOGINREQUIRED}></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ispublic" id="ispublic_2" value="2" <{if $ispublic == "2"}>checked="checked"<{/if}>>
+                <label class="form-check-label" for="ispublic_2"><{$smarty.const._MD_JILLQUERY_BINDEMAIL}></label>
               </div>
           </div>
         </div>

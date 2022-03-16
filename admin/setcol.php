@@ -53,7 +53,13 @@ function list_col($qsn = "")
 
         if ($qcsnSearch == 1) {
             $qcsnSearch = "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_qcsnSearch' onClick=\"change_enable($qcsn,'qcsnSearch');\" style='cursor: pointer;'>";
-            $isLike     = $isLike == 1 ? "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>" : "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>";
+            if ($queryArr['ispublic'] == 2 && $qc_title == 'email') {
+                $isLike = "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' style='cursor: pointer;'>";
+
+            } else {
+                $isLike = $isLike == 1 ? "<img src='" . XOOPS_URL . "/modules/jill_query/images/yes.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>" : "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' onClick=\"change_enable($qcsn,'isLike');\" style='cursor: pointer;'>";
+            }
+
         } else {
             $qcsnSearch = "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_qcsnSearch' onClick=\"change_enable($qcsn,'qcsnSearch');\" style='cursor: pointer;'>";
             $isLike     = "<img src='" . XOOPS_URL . "/modules/jill_query/images/no.gif' id='{$qcsn}_isLike' style='cursor: pointer;'>";
@@ -75,7 +81,7 @@ function list_col($qsn = "")
         $all_content[$i]['qcSort'] = $qcSort;
 
         $qcinfo                      = get_jill_query_col_value_qcsn($qcsn);
-        $all_content[$i]['show_del'] = (empty($qcinfo)) ? 1 : "";
+        $all_content[$i]['show_del'] = (empty($qcinfo) && $queryArr['ispublic'] != 2) ? 1 : "";
         $i++;
     }
     // die(var_dump($all_content));

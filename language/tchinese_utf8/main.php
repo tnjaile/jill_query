@@ -17,6 +17,9 @@
  * @version    $Id $
  **/
 xoops_loadLanguage('main', 'tadtools');
+
+define('_MD_JILLQUERY_BINDEMAIL', '以登入的EMAIL查詢');
+define('_MD_JILLQUERY_LOGINREQUIRED', '登入查詢');
 define('_MD_JILLQUERY_PUBLIC', '觀看所有公開資料');
 define('_MD_JILLQUERY_PUBLICERROR', '此事件不公開查詢');
 define('_MD_JILLQUERY_PUBLICQUERY', '目前的查詢事件為：');

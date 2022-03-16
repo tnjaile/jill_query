@@ -73,6 +73,7 @@ function list_searchcol($qsn = "")
     // $xoopsTpl->assign('jill_query_col_jquery_ui', Utility::get_jquery(true));
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('title', $queryArr['title']);
+    $xoopsTpl->assign('ispublic', $queryArr['ispublic']);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('isAdmin', $isAdmin);
     $xoopsTpl->assign('def_search_operator', $def_search_operator);
@@ -88,7 +89,7 @@ function update_searchcol($qsn = "")
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $search_operator = $myts->addSlashes($_POST['search_operator']);
+    $search_operator = ($_POST['ispublic'] == 2) ? 'and' : $myts->addSlashes($_POST['search_operator']);
 
     $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
        `search_operator` = '{$search_operator}'

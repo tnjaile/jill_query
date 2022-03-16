@@ -13,14 +13,17 @@
               <input type="radio" name="search_operator" id="search_operator_1" value="and" <{if $def_search_operator == "and"}>checked="checked"<{/if}>><{$smarty.const._MA_JILLQUERY__OPERATOR_AND}><strong class="text-danger">(<{$smarty.const._FILL_ALL_FIELDS}>)</strong>
             </label>
           </div>
-          <div class="radio">
-            <label class="radio-inline">
-              <input type="radio" name="search_operator" id="search_operator_2" value="or" <{if $def_search_operator == "or"}>checked="checked"<{/if}>><{$smarty.const._MA_JILLQUERY__OPERATOR_OR}><strong class="text-danger">(<{$smarty.const._FILL_ANY_FIELDS}>)</strong>
-            </label>
-          </div>
+          <{if $ispublic!=2}>
+            <div class="radio">
+              <label class="radio-inline">
+                <input type="radio" name="search_operator" id="search_operator_2" value="or" <{if $def_search_operator == "or"}>checked="checked"<{/if}>><{$smarty.const._MA_JILLQUERY__OPERATOR_OR}><strong class="text-danger">(<{$smarty.const._FILL_ANY_FIELDS}>)</strong>
+              </label>
+            </div>
+          <{/if}>
           <div class="row" style="text-align: center;">
             <button type="submit" class="btn btn-primary"><{$smarty.const._MA_JILLQUERY_SETSEARCH}></button>
             <input type='hidden' name="qsn" value="<{$qsn}>">
+            <input type='hidden' name="ispublic" value="<{$ispublic}>">
             <input type="hidden" name="op" value="update_searchcol">
           </div>
         </form>

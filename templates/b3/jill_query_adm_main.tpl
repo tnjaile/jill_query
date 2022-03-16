@@ -69,12 +69,14 @@
             <{$smarty.const._MA_JILLQUERY_ISPUBLIC_DESC}>
           </label>
           <div class="col-sm-10">
-
               <label class="radio-inline">
                 <input type="radio" name="ispublic" id="ispublic_1" value="1" <{if $ispublic == "1"}>checked="checked"<{/if}>><{$smarty.const._YES}>
               </label>
               <label class="radio-inline">
-                <input type="radio" name="ispublic" id="ispublic_0" value="0" <{if $ispublic == "0" || $ispublic == ""}>checked="checked"<{/if}>><{$smarty.const._NO}>
+                <input type="radio" name="ispublic" id="ispublic_0" value="0" <{if $ispublic == "0" || $ispublic == ""}>checked="checked"<{/if}>><{$smarty.const._MD_JILLQUERY_LOGINREQUIRED}>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="ispublic" id="ispublic_2" value="2" <{if $ispublic == "2"}>checked="checked"<{/if}>><{$smarty.const._MD_JILLQUERY_BINDEMAIL}>
               </label>
           </div>
         </div>
