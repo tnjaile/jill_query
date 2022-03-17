@@ -23,7 +23,7 @@ include_once XOOPS_ROOT_PATH . "/modules/jill_query/function_block.php";
 //區塊主函式 (jill_query_show)
 function jill_query_show($options)
 {
-    global $xoopsDB, $xoTheme;
+    global $xoopsDB, $xoTheme, $xoopsUser;
     //die($options[0] . "asd");
     if (empty($options)) {
         return;
@@ -56,6 +56,8 @@ function jill_query_show($options)
     //die(var_dump($block));
     $block['query_arr'] = $query_arr;
     $block['qsn']       = $options[0];
+    $block['email']     = $xoopsUser->email();
+
     return $block;
 }
 
