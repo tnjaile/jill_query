@@ -88,7 +88,10 @@
       <{/if}>
       <{includeq file="$xoops_rootpath/modules/jill_query/templates/jill_query_list_data.tpl"}>
       <{$bar}>
-
+    <{else}>
+      <div class="jumbotron">
+        <h2><a href="<{$action}>?qsn=<{$qsn}>"><{$smarty.const._MD_JILLQUERY_NODATA}><{$smarty.const._MD_JILLQUERY_BACKSEARCH}></a></h2>
+      </div>
     <{/if}>
 
 <{/if}>
