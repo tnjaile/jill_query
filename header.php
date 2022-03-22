@@ -26,7 +26,6 @@ if ($xoopsUser) {
     $xoopsModule = $modhandler->getByDirname("jill_query");
     $module_id   = $xoopsModule->getVar('mid');
     $isAdmin     = $xoopsUser->isAdmin($module_id);
-    $iseditAdm   = get_undertaker();
 }
 
 //$interface_menu[_TAD_TO_MOD]="index.php";

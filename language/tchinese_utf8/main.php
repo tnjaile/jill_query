@@ -17,7 +17,8 @@
  * @version    $Id $
  **/
 xoops_loadLanguage('main', 'tadtools');
-
+define('_MD_JILLQUERY_KEYWORD', '再輸入關鍵字');
+define('_MD_JILLQUERY_QCTITLESEARCH', '先選擇查詢欄位');
 define('_MD_JILLQUERY_BINDEMAIL', '以登入的EMAIL查詢');
 define('_MD_JILLQUERY_LOGINREQUIRED', '登入查詢');
 define('_MD_JILLQUERY_PUBLIC', '觀看所有公開資料');

@@ -140,13 +140,12 @@ function delete_data($qsn = "")
 }
 /********************* XOOPS檢查身分函數 *********************/
 //判斷承辦人
-function get_undertaker($qsn = "")
+function get_undertaker($qsn)
 {
     global $xoopsUser, $xoopsDB, $isAdmin;
     if (!$xoopsUser) {
         return;
     }
-
     $uemail = $xoopsUser->email();
     // $sql    = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn' and `editorEmail` LIKE '%{$uemail}%' &&  `isEnable`='1' ";
     $sql = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn'  &&  `isEnable`='1' ";

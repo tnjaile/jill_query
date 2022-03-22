@@ -45,22 +45,52 @@
       <{$jill_query_col_value_jquery_ui}>
       <{$jeditable_set}>
       <{$delete_jill_query_col_value_func}>
+      <{$formValidator_code}>
 
       <h3><{$total}></h3>
-      <{if $isAdmin}>
-        <div class="text-right" style="margin:10px 0px;">
-          <a href="<{$xoops_url}>/modules/jill_query/admin/setcol.php?qsn=<{$qsn}>" class="btn btn-success btn-sm"><{$smarty.const._MD_JILLQUERY_SETCOL}></a>
-          <a href="<{$xoops_url}>/modules/jill_query/admin/setsearch.php?qsn=<{$qsn}>" class="btn btn-info btn-sm"><{$smarty.const._MD_JILLQUERY_SETSEARCH}></a>
-          <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=jill_query_form&qsn=<{$qsn}>" class="btn btn-warning btn-sm"><{$smarty.const._TAD_EDIT}></a>
+      <hr>
+      <{if $isAdmin || $iseditAdm}>
+        <div class="row justify-content-between mb-2">
+          <div class="col-auto">
+            <form action="<{$action}>" method="POST" id="searchform" class="form-inline"  role="form">
+                <div class="input-group">
+                  <select name="qcsn" id="qc_title" class="form-control validate[required]">
+                    <option value=""><{$smarty.const._MD_JILLQUERY_QCTITLESEARCH}></option>
+                    <{foreach from=$title_arr key=qcsn item=t}>
+                      <option value="<{$qcsn}>"><{$t.qc_title}></option>
+                    <{/foreach}>
+                  </select>
+                </div>
+                <div class="input-group ml-2">
+                  <input type="text" id="keyword" name="keyword" class="form-control validate[condRequired[qc_title],required]"   placeholder="<{$smarty.const._MD_JILLQUERY_KEYWORD}>" value="">
+                  <div class="input-group-btn ml-2">
+                    <input type="submit" name="send" value="<{$smarty.const._MD_JILLQUERY_SEARCH}>" class="btn btn-primary" />
+                    <input type="hidden" name="qsn"  value="<{$qsn}>">
+                    <input type="hidden" name="next_op"  value="show_search">
+                  </div>
+                </div>
+            </form>
+          </div>
+          <{if $next_op=="show_search"}>
+            <div class="col-auto">
+              <a href="<{$action}>?qsn=<{$qsn}>" class="btn btn-link"><i class="fa fa-search" aria-hidden="true"></i> <{$smarty.const._MD_JILLQUERY_BACKSEARCH}></a>
+            </div>
+          <{/if}>
+          <{if $isAdmin}>
+            <div class="col-auto">
+              <a href="<{$xoops_url}>/modules/jill_query/admin/setcol.php?qsn=<{$qsn}>" class="btn btn-success btn-sm"><{$smarty.const._MD_JILLQUERY_SETCOL}></a>
+              <a href="<{$xoops_url}>/modules/jill_query/admin/setsearch.php?qsn=<{$qsn}>" class="btn btn-info btn-sm"><{$smarty.const._MD_JILLQUERY_SETSEARCH}></a>
+              <a href="<{$xoops_url}>/modules/jill_query/admin/main.php?op=jill_query_form&qsn=<{$qsn}>" class="btn btn-warning btn-sm"><{$smarty.const._TAD_EDIT}></a>
+            </div>
+          <{/if}>
         </div>
       <{/if}>
       <{includeq file="$xoops_rootpath/modules/jill_query/templates/jill_query_list_data.tpl"}>
       <{$bar}>
-
+    <{else}>
+      <div class="jumbotron">
+        <h2><a href="<{$action}>?qsn=<{$qsn}>"><{$smarty.const._MD_JILLQUERY_NODATA}><{$smarty.const._MD_JILLQUERY_BACKSEARCH}></a></h2>
+      </div>
     <{/if}>
 
 <{/if}>
-
-
-
-

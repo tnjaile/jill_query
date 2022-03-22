@@ -12,6 +12,7 @@
 
 /*-----------引入檔案區--------------*/
 use Xmf\Request;
+use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Jeditable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -25,6 +26,8 @@ $ssn = Request::getInt('ssn');
 if (!get_undertaker($qsn)) {
     redirect_header("index.php", 3, _MD_JILLQUERY_ILLEGAL);
 }
+$iseditAdm = get_undertaker($qsn);
+
 $xoopsOption['template_main'] = 'jill_query_excel.tpl';
 include_once XOOPS_ROOT_PATH . "/header.php";
 
@@ -32,20 +35,40 @@ include_once XOOPS_ROOT_PATH . "/header.php";
 //列出匯入資料
 function list_data($qsn = '')
 {
-    global $xoopsDB, $xoopsTpl, $xoopsUser, $isAdmin;
+    global $xoopsDB, $xoopsTpl, $xoopsUser, $isAdmin, $iseditAdm;
 
-    $uid   = $xoopsUser->uid();
-    $where = (empty($isAdmin)) ? "where `qsn`='{$qsn}' && `uid`='{$uid}'" : "where `qsn`='{$qsn}'";
-    $sql   = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
-     $where order by `qrSort` ";
+    // // array(4) { ["qcsn"]=> string(1) "3" ["keyword"]=> string(9) "李佳玲" ["send"]=> string(12) "立即查詢" ["qsn"]=> string(1) "1" }
+    $uid = $xoopsUser->uid();
 
-    //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    if (isset($_POST['next_op']) && $_POST['next_op'] == 'show_search') {
+        $keyword = Request::getString('keyword');
+        $qcsn    = Request::getInt('qcsn');
 
-    $result      = $xoopsDB->query($sql) or Utility::web_error($sql);
+        $where = (empty($isAdmin)) ? " && b.`uid`='{$uid}'" : "";
+        $sql   = "select a.`ssn`,b.qrSort from `" . $xoopsDB->prefix("jill_query_col_value") . "` as a
+		join `" . $xoopsDB->prefix("jill_query_sn") . "` as b on a.`ssn`=b.`ssn`
+        where a.`qcsn`='{$qcsn}' && a.`fillValue` like '%{$keyword}%' $where";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+        $total  = $xoopsDB->getRowsNum($result);
+        $xoopsTpl->assign('next_op', 'show_search');
+
+    } else {
+
+        $where = (empty($isAdmin)) ? "where `qsn`='{$qsn}' && `uid`='{$uid}'" : "where `qsn`='{$qsn}'";
+        $sql   = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
+        $where order by `qrSort` ";
+
+        //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+        $PageBar = Utility::getPageBar($sql, 20, 10);
+        $bar     = $PageBar['bar'];
+        $sql     = $PageBar['sql'];
+        $total   = $PageBar['total'];
+
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+        $xoopsTpl->assign('bar', $bar);
+
+    }
+
     $all_content = array();
     while (list($ssn, $qrSort) = $xoopsDB->fetchRow($result)) {
 
@@ -65,13 +88,18 @@ function list_data($qsn = '')
         "{$_SERVER['PHP_SELF']}?op=delete_jill_query_col_value&qsn=$qsn&ssn=", "ssn");
     $xoopsTpl->assign('delete_jill_query_col_value_func', $delete_jill_query_col_value_func);
 
+    //套用formValidator驗證機制
+    $formValidator      = new FormValidator("#searchform", true);
+    $formValidator_code = $formValidator->render();
+    $xoopsTpl->assign('formValidator_code', $formValidator_code);
+
+    // die(var_dump(get_jill_query_allcol_qsn($qsn)));
     $xoopsTpl->assign('title_arr', get_jill_query_allcol_qsn($qsn));
     $xoopsTpl->assign('query_arr', get_jill_query($qsn));
     $xoopsTpl->assign('all_content', $all_content);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('qsn', $qsn);
     $xoopsTpl->assign('now_op', 'list_data');
-    $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('total', sprintf(_MD_JILLQUERY_TITLE, $total));
 
     $file      = "save_col_val.php?qsn=$qsn";
@@ -190,6 +218,7 @@ function jill_query_max_qrSort($qsn = "")
     list($sort) = $xoopsDB->fetchRow($result);
     return $sort;
 }
+
 /*-----------執行動作判斷區----------*/
 
 switch ($op) {
@@ -201,12 +230,11 @@ switch ($op) {
         header("location: {$_SERVER['PHP_SELF']}?qsn=$qsn");
         break;
 
-//刪除資料
+    //刪除資料
     case "delete_jill_query_col_value":
         delete_jill_query_col_value($ssn);
         header("location: {$_SERVER['PHP_SELF']}?qsn=$qsn");
         exit;
-
     default:
         if (empty($qsn)) {
             redirect_header("index.php", 3, _MD_JILLQUERY_EMPTYQSN);
@@ -221,4 +249,5 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("toolbar", Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
+$xoopsTpl->assign('iseditAdm', $iseditAdm);
 include_once XOOPS_ROOT_PATH . '/footer.php';
