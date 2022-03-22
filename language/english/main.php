@@ -17,6 +17,12 @@
  * @version    $Id $
  **/
 xoops_loadLanguage('main', 'tadtools');
+
+define('_MD_JILLQUERY_USER', 'download the member-email file');
+define('_MD_JILLQUERY_KEYWORD', 'input the keyword,next');
+define('_MD_JILLQUERY_QCTITLESEARCH', 'select query column,first');
+define('_MD_JILLQUERY_BINDEMAIL', 'query by member-email');
+define('_MD_JILLQUERY_LOGINREQUIRED', 'login enquiry');
 define('_MD_JILLQUERY_PUBLIC', 'View all public information');
 define('_MD_JILLQUERY_PUBLICERROR', 'This event is not publicly queried');
 define('_MD_JILLQUERY_PUBLICQUERY', 'The current query event is:');

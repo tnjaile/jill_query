@@ -10,7 +10,11 @@
     </a>
     </h2>
 
-    <h2><{$smarty.const._MD_JILLQUERY_STEP}> 2<{$smarty.const._TAD_FOR}><{$smarty.const._MD_JILLQUERY_STEP2}></h2>
+    <h2><{$smarty.const._MD_JILLQUERY_STEP}> 2<{$smarty.const._TAD_FOR}><{$smarty.const._MD_JILLQUERY_STEP2}>
+      <{if $query_arr.ispublic=="2"}>
+        <a href="excel_users.php">( <i class="fa fa-users" aria-hidden="true"></i> <{$smarty.const._MD_JILLQUERY_USER}> )</a>
+      <{/if}>
+    </h2>
     <div class="row">
       <div class="col-sm-8">
         <div class="alert alert-info">
