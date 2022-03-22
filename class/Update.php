@@ -27,7 +27,26 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 class Update
 {
-
+    //檢查`ispublic` enum('0','1') NOT NULL COMMENT '是否公開'
+    public static function chk_chk11()
+    {
+        global $xoopsDB;
+        $sql = "show columns from " . $xoopsDB->prefix("jill_query") . " where Field='ispublic' && Type=\"enum('0','1')\"";
+        // die($sql);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+        if (empty($result->num_rows)) {
+            return false;
+        }
+        return true;
+    }
+    //修正`ispublic` enum('0','1','2') NOT NULL COMMENT '是否公開'
+    public static function go_update11()
+    {
+        global $xoopsDB;
+        $sql = "ALTER TABLE " . $xoopsDB->prefix("jill_query") . " CHANGE `ispublic` `ispublic` enum('0','1','2') NOT NULL COMMENT '是否公開' AFTER `passwd` ";
+        $xoopsDB->queryF($sql) or Utility::web_error($sql);
+        return true;
+    }
     //檢查tag_sn 欄位 smallint(5)是否存在
     public static function chk_chk10()
     {

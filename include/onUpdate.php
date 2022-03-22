@@ -25,6 +25,10 @@ if (!class_exists('XoopsModules\Jill_query\Update')) {
 
 function xoops_module_update_jill_query($module, $old_version)
 {
+    if (Update::chk_chk11()) {
+        Update::go_update11();
+    }
+
     if (Update::chk_chk1()) {
         Update::go_update1();
     }
