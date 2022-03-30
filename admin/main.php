@@ -23,7 +23,7 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$isAdmin                      = true;
+$isAdmin = true;
 $xoopsOption['template_main'] = 'jill_query_adm_main.tpl';
 include_once "header.php";
 include_once "../function.php";
@@ -67,7 +67,7 @@ function jill_query_form($qsn = '')
     $xoopsTpl->assign('counter', $counter);
     //設定 uid 欄位的預設值
     $user_uid = $xoopsUser ? $xoopsUser->uid() : "";
-    $uid      = !isset($DBV['uid']) ? $user_uid : $DBV['uid'];
+    $uid = !isset($DBV['uid']) ? $user_uid : $DBV['uid'];
     $xoopsTpl->assign('uid', $uid);
     //設定 passwd 欄位的預設值
     $passwd = !isset($DBV['passwd']) ? '' : $DBV['passwd'];
@@ -90,7 +90,7 @@ function jill_query_form($qsn = '')
     //$op = "replace_jill_query";
 
     //套用formValidator驗證機制
-    $formValidator      = new FormValidator("#myForm", true);
+    $formValidator = new FormValidator("#myForm", true);
     $formValidator_code = $formValidator->render();
 
     //說明
@@ -101,7 +101,7 @@ function jill_query_form($qsn = '')
 
     //加入Token安全機制
     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $token      = new \XoopsFormHiddenToken();
+    $token = new \XoopsFormHiddenToken();
     $token_form = $token->render();
     $xoopsTpl->assign("token_form", $token_form);
     $xoopsTpl->assign('action', $_SERVER["PHP_SELF"]);
@@ -126,14 +126,14 @@ function insert_jill_query()
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $qsn         = intval($_POST['qsn']);
-    $title       = $myts->addSlashes($_POST['title']);
-    $directions  = $myts->addSlashes($_POST['directions']);
+    $qsn = intval($_POST['qsn']);
+    $title = $myts->addSlashes($_POST['title']);
+    $directions = $myts->addSlashes($_POST['directions']);
     $editorEmail = $myts->addSlashes($_POST['editorEmail']);
-    $isEnable    = intval($_POST['isEnable']);
-    $passwd      = $myts->addSlashes($_POST['passwd']);
-    $ispublic    = intval($_POST['ispublic']);
-    $read_group  = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+    $isEnable = intval($_POST['isEnable']);
+    $passwd = $myts->addSlashes($_POST['passwd']);
+    $ispublic = intval($_POST['ispublic']);
+    $read_group = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
     // die(var_dump($read_group));
     $tag_sn = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
     //取得使用者編號
@@ -194,14 +194,14 @@ function update_jill_query($qsn = '')
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $qsn         = intval($_POST['qsn']);
-    $title       = $myts->addSlashes($_POST['title']);
-    $directions  = $myts->addSlashes($_POST['directions']);
+    $qsn = intval($_POST['qsn']);
+    $title = $myts->addSlashes($_POST['title']);
+    $directions = $myts->addSlashes($_POST['directions']);
     $editorEmail = $myts->addSlashes($_POST['editorEmail']);
-    $isEnable    = intval($_POST['isEnable']);
-    $passwd      = $myts->addSlashes($_POST['passwd']);
-    $ispublic    = intval($_POST['ispublic']);
-    $read_group  = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
+    $isEnable = intval($_POST['isEnable']);
+    $passwd = $myts->addSlashes($_POST['passwd']);
+    $ispublic = intval($_POST['ispublic']);
+    $read_group = $_POST['ispublic'] == 2 ? json_encode(array_diff($_POST['read_group'], [3]), JSON_UNESCAPED_UNICODE) : json_encode($_POST['read_group'], JSON_UNESCAPED_UNICODE);
 
     $tag_sn = (empty($_POST['tag_sn'])) ? '' : intval($_POST['tag_sn']);
 
@@ -226,7 +226,7 @@ function update_jill_query($qsn = '')
         $sql2 = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
         where `qsn` = '{$qsn}' && `qc_title`='email' order by `qcSort`";
         $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2);
-        $cols    = $xoopsDB->fetchArray($result2);
+        $cols = $xoopsDB->fetchArray($result2);
         // die(var_dump($cols));
 
         $sql = "update `" . $xoopsDB->prefix("jill_query_col") . "` set
@@ -280,7 +280,7 @@ function show_one_jill_query($qsn = '')
     $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "`
     where `qsn` = '{$qsn}' ";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
-    $all    = $xoopsDB->fetchArray($result);
+    $all = $xoopsDB->fetchArray($result);
 
     //以下會產生這些變數： $qsn, $title, $directions, $editorEmail, $isEnable, $counter, $uid
     foreach ($all as $k => $v) {
@@ -297,11 +297,11 @@ function show_one_jill_query($qsn = '')
     }
 
     //過濾讀出的變數值
-    $title          = $myts->htmlSpecialChars($title);
-    $directions     = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
-    $editorEmail    = $myts->htmlSpecialChars($editorEmail);
-    $counter        = $myts->displayTarea($counter, 1, 1, 0, 1, 0);
-    $passwd         = $myts->htmlSpecialChars($passwd);
+    $title = $myts->htmlSpecialChars($title);
+    $directions = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
+    $editorEmail = $myts->htmlSpecialChars($editorEmail);
+    $counter = $myts->displayTarea($counter, 1, 1, 0, 1, 0);
+    $passwd = $myts->htmlSpecialChars($passwd);
     $read_group_arr = json_decode($read_group, true);
     if (empty($read_group_arr)) {
         $read_group_name = "";
@@ -320,7 +320,7 @@ function show_one_jill_query($qsn = '')
     $xoopsTpl->assign('passwd', $passwd);
     $xoopsTpl->assign('ispublic', $ispublic);
 
-    $sweet_alert_obj        = new SweetAlert();
+    $sweet_alert_obj = new SweetAlert();
     $delete_jill_query_func = $sweet_alert_obj->render('delete_jill_query_func', "{$_SERVER['PHP_SELF']}?op=delete_jill_query&qsn=", "qsn");
     $xoopsTpl->assign('delete_jill_query_func', $delete_jill_query_func);
 
@@ -336,18 +336,18 @@ function list_jill_query()
     $myts = \MyTextSanitizer::getInstance();
     // 取得所有標籤名
     $tag_opt = tag_menu();
-    $sql     = "select * from `" . $xoopsDB->prefix("jill_query") . "` order by isEnable desc,qsn desc";
+    $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "` order by isEnable desc,qsn desc";
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
     $all_content = array();
-    $i           = 0;
+    $i = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $qsn, $title, $directions, $editorEmail, $isEnable, $counter, $uid
         foreach ($all as $k => $v) {
@@ -373,23 +373,23 @@ function list_jill_query()
         }
 
         //過濾讀出的變數值
-        $title       = $myts->htmlSpecialChars($title);
-        $directions  = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
+        $title = $myts->htmlSpecialChars($title);
+        $directions = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
         $editorEmail = $myts->htmlSpecialChars($editorEmail);
 
-        $all_content[$i]['qsn']         = $qsn;
-        $all_content[$i]['title']       = $title;
-        $all_content[$i]['directions']  = $directions;
+        $all_content[$i]['qsn'] = $qsn;
+        $all_content[$i]['title'] = $title;
+        $all_content[$i]['directions'] = $directions;
         $all_content[$i]['editorEmail'] = $editorEmail;
-        $all_content[$i]['isEnable']    = $isEnable;
-        $all_content[$i]['counter']     = $counter;
-        $all_content[$i]['uid']         = $uid;
-        $all_content[$i]['uid_name']    = $uid_name;
-        $all_content[$i]['passwd']      = $passwd;
-        $all_content[$i]['ispublic']    = $ispublic;
-        $all_content[$i]['tag_sn']      = $tag_sn;
-        $all_content[$i]['tag_title']   = empty($tag_sn) ? _MA_JILLQUERY_TAG_SET : $tag_opt[$tag_sn];
-        $read_group_arr                 = json_decode($read_group, true);
+        $all_content[$i]['isEnable'] = $isEnable;
+        $all_content[$i]['counter'] = $counter;
+        $all_content[$i]['uid'] = $uid;
+        $all_content[$i]['uid_name'] = $uid_name;
+        $all_content[$i]['passwd'] = $passwd;
+        $all_content[$i]['ispublic'] = $ispublic;
+        $all_content[$i]['tag_sn'] = $tag_sn;
+        $all_content[$i]['tag_title'] = empty($tag_sn) ? _MA_JILLQUERY_TAG_SET : $tag_opt[$tag_sn];
+        $read_group_arr = json_decode($read_group, true);
         if (!empty($read_group_arr)) {
             $all_content[$i]['read_group_name'] = "";
             foreach ($read_group_arr as $group_id) {
@@ -398,21 +398,21 @@ function list_jill_query()
         } else {
             $all_content[$i]['read_group_name'] = "尚未指定";
         }
-        $data_total               = count_jill_query_sn($qsn);
+        $data_total = count_jill_query_sn($qsn);
         $all_content[$i]['total'] = (empty($data_total)) ? _MD_JILLQUERY_NODATA : $data_total;
-        $all_content[$i]['cols']  = count_jill_query_col_qsn($qsn);
+        $all_content[$i]['cols'] = count_jill_query_col_qsn($qsn);
         $i++;
     }
 
     // 點擊編輯
-    $Bootstrap3Editable     = new Bootstrap3Editable();
+    $Bootstrap3Editable = new Bootstrap3Editable();
     $Bootstrap3EditableCode = $Bootstrap3Editable->render('.jq_tag', 'main_ajax.php');
     $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
     $tag_opt[0] = _MA_JILLQUERY_TAG_SET;
     $xoopsTpl->assign('tag_opt', json_encode($tag_opt, 256));
     // die(var_dump($all_content));
     //刪除確認的JS
-    $sweet_alert_obj        = new SweetAlert();
+    $sweet_alert_obj = new SweetAlert();
     $delete_jill_query_func = $sweet_alert_obj->render('delete_jill_query_func',
         "{$_SERVER['PHP_SELF']}?op=delete_jill_query&qsn=", "qsn");
     $xoopsTpl->assign('delete_jill_query_func', $delete_jill_query_func);
@@ -431,16 +431,16 @@ function copy_cols($qsn = "")
     if (!$isAdmin || empty($qsn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _TAD_PERMISSION_DENIED);
     }
-    $sourceArr               = get_jill_query($qsn);
-    $source_colsArr          = get_jill_query_allcol_qsn($qsn);
-    $myts                    = \MyTextSanitizer::getInstance();
-    $sourceArr['title']      = $myts->addSlashes($sourceArr['title']);
+    $sourceArr = get_jill_query($qsn);
+    $source_colsArr = get_jill_query_allcol_qsn($qsn);
+    $myts = \MyTextSanitizer::getInstance();
+    $sourceArr['title'] = $myts->addSlashes($sourceArr['title']);
     $sourceArr['directions'] = $myts->addSlashes($sourceArr['directions']);
     //die(var_dump($source_colsArr));
     //取得使用者編號
-    $uid         = $xoopsUser->uid();
-    $editorEmail = $xoopsUser->email();
-    $sql         = "insert into `" . $xoopsDB->prefix("jill_query") . "` (
+    $uid = $xoopsUser->uid();
+    $editorEmail = $xoopsUser ? $xoopsUser->email() : '';
+    $sql = "insert into `" . $xoopsDB->prefix("jill_query") . "` (
         `title`,
         `directions`,
         `editorEmail`,
@@ -475,7 +475,7 @@ function copy_cols($qsn = "")
     return $qsn;
 }
 /*-----------執行動作判斷區----------*/
-$op  = Request::getString('op');
+$op = Request::getString('op');
 $qsn = Request::getInt('qsn');
 
 switch ($op) {

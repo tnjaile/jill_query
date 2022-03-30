@@ -53,35 +53,35 @@ function search($qsn = '')
 
     add_jill_query_counter($qsn);
     $myts = \MyTextSanitizer::getInstance();
-    $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
+    $sql = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='$qsn' && `qcsnSearch`=1 order by `qcSort`";
     //die($sql);
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
-    $total  = $xoopsDB->getRowsNum($result);
+    $total = $xoopsDB->getRowsNum($result);
     if (empty($total)) {
         redirect_header("index.php", 3, _MD_JILLQUERY_EMPTY_SEARCH);
     }
 
     $all_content = array();
-    $i           = 0;
+    $i = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： qcsn,qsn,qc_title,qcsnSearch,search_operator,isShow,qcSort
         foreach ($all as $k => $v) {
             $$k = $v;
         }
         //過濾讀出的變數值
-        $qc_title                           = $myts->htmlSpecialChars($qc_title);
-        $all_content[$i]['qcsn']            = $qcsn;
-        $all_content[$i]['qc_title']        = $qc_title;
-        $all_content[$i]['qcsnSearch']      = $qcsnSearch;
+        $qc_title = $myts->htmlSpecialChars($qc_title);
+        $all_content[$i]['qcsn'] = $qcsn;
+        $all_content[$i]['qc_title'] = $qc_title;
+        $all_content[$i]['qcsnSearch'] = $qcsnSearch;
         $all_content[$i]['search_operator'] = $search_operator;
-        $all_content[$i]['isShow']          = $isShow;
-        $all_content[$i]['qcSort']          = $qcSort;
-        $all_content[$i]['isLike']          = $isLike;
+        $all_content[$i]['isShow'] = $isShow;
+        $all_content[$i]['qcSort'] = $qcSort;
+        $all_content[$i]['isLike'] = $isLike;
         $i++;
     }
     //套用formValidator驗證機制
-    $formValidator      = new FormValidator("#myForm", true);
+    $formValidator = new FormValidator("#myForm", true);
     $formValidator_code = $formValidator->render();
     $xoopsTpl->assign('formValidator_code', $formValidator_code);
 
@@ -90,7 +90,8 @@ function search($qsn = '')
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_col', $all_content);
     $xoopsTpl->assign('query_arr', $query_arr);
-    $xoopsTpl->assign('email', $xoopsUser->email());
+    $uemail = $xoopsUser ? $xoopsUser->email() : '';
+    $xoopsTpl->assign('email', $uemail);
     $xoopsTpl->assign('iseditAdm', get_undertaker($qsn));
 }
 
@@ -108,16 +109,16 @@ function list_jill_query()
     }
 
     $and_tag = empty($_GET['tag_sn']) ? "" : "&& tag_sn='{$_GET['tag_sn']}'";
-    $sql     = "select * from `" . $xoopsDB->prefix("jill_query") . "` where isEnable='1' $and_tag order by qsn desc ";
+    $sql = "select * from `" . $xoopsDB->prefix("jill_query") . "` where isEnable='1' $and_tag order by qsn desc ";
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
     $all_content = array();
-    $i           = 0;
+    $i = 0;
 
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $qsn, $title, $directions, $editorEmail, $isEnable, $counter, $uid
@@ -139,18 +140,18 @@ function list_jill_query()
         }
 
         //過濾讀出的變數值
-        $title       = $myts->htmlSpecialChars($title);
-        $directions  = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
+        $title = $myts->htmlSpecialChars($title);
+        $directions = $myts->displayTarea($directions, 1, 1, 0, 1, 0);
         $editorEmail = $myts->htmlSpecialChars($editorEmail);
 
-        $all_content[$i]['qsn']         = $qsn;
-        $all_content[$i]['title']       = $title;
-        $all_content[$i]['directions']  = $directions;
+        $all_content[$i]['qsn'] = $qsn;
+        $all_content[$i]['title'] = $title;
+        $all_content[$i]['directions'] = $directions;
         $all_content[$i]['editorEmail'] = $editorEmail;
-        $all_content[$i]['isEnable']    = $isEnable;
-        $all_content[$i]['counter']     = $counter;
-        $all_content[$i]['uid']         = $uid;
-        $all_content[$i]['uid_name']    = $uid_name;
+        $all_content[$i]['isEnable'] = $isEnable;
+        $all_content[$i]['counter'] = $counter;
+        $all_content[$i]['uid'] = $uid;
+        $all_content[$i]['uid_name'] = $uid_name;
         //承辦人
         $all_content[$i]['iseditAdm'] = get_undertaker($qsn);
 
@@ -199,9 +200,9 @@ function show_result($qsn = "")
     $all_content = array();
     //過濾要秀出來的標題
     if (is_array($title_arr)) {
-        $title_show_arr  = filter_by_value($title_arr, 'isShow', '1');
-        $qcsn_arr        = array_keys($title_arr);
-        $myts            = \MyTextSanitizer::getInstance();
+        $title_show_arr = filter_by_value($title_arr, 'isShow', '1');
+        $qcsn_arr = array_keys($title_arr);
+        $myts = \MyTextSanitizer::getInstance();
         $search_operator = current($_POST['search_operator']);
 
         if ($search_operator == "and") {
@@ -275,16 +276,16 @@ function get_jill_query_col_value_ssn($qcsn = "", $fillValue = "")
     $sql = "select `isLike` from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qcsn`='{$qcsn}' ";
     //die($sql);
-    $result       = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($isLike) = $xoopsDB->fetchRow($result);
-    $isLike_str   = (empty($isLike)) ? " a.`fillValue` = '{$fillValue}' " : " a.`fillValue` like '%{$fillValue}%'";
-    $sql          = "select a.`ssn` from `" . $xoopsDB->prefix("jill_query_col_value") . "` as a
+    $isLike_str = (empty($isLike)) ? " a.`fillValue` = '{$fillValue}' " : " a.`fillValue` like '%{$fillValue}%'";
+    $sql = "select a.`ssn` from `" . $xoopsDB->prefix("jill_query_col_value") . "` as a
 		join `" . $xoopsDB->prefix("jill_query_sn") . "` as b on a.`ssn`=b.`ssn`
     where a.`qcsn`='{$qcsn}' && $isLike_str ";
     // die($sql);
-    $result  = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $ssn_arr = array();
-    $i       = 0;
+    $i = 0;
     while (list($ssn) = $xoopsDB->fetchRow($result)) {
         $ssn_arr[$i] = $ssn;
         $i++;
@@ -332,17 +333,17 @@ function public_query($qsn)
     $title_arr = get_jill_query_allcol_qsn($qsn);
     if (is_array($title_arr)) {
         $title_show_arr = filter_by_value($title_arr, 'isShow', '1');
-        $qcsn_arr       = array_keys($title_arr);
+        $qcsn_arr = array_keys($title_arr);
     }
 
     $myts = \MyTextSanitizer::getInstance();
-    $sql  = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
+    $sql = "select ssn, qrSort  from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn`='{$qsn}' order by `qrSort` ";
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
 
@@ -364,7 +365,7 @@ function public_query($qsn)
     $xoopsTpl->assign('bar', $bar);
 }
 /*-----------執行動作判斷區----------*/
-$op  = Request::getString('op');
+$op = Request::getString('op');
 $qsn = Request::getInt('qsn');
 
 switch ($op) {

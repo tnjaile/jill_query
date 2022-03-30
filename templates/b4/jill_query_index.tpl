@@ -11,7 +11,7 @@
       <{foreach from=$tag_opt key=t item=tag}>
         <div class="form-check-inline radio-inline">
           <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="tag_sn" id="tag_<{$t}>" value="<{$t}>" onClick="location.href='<{$action}>?tag_sn='+this.value"" <{if $tag_sn == $t}>checked="checked"<{/if}>><{$tag}>
+              <input class="form-check-input" type="radio" name="tag_sn" id="tag_<{$t}>" value="<{$t}>" onClick="location.href='<{$action}>?tag_sn='+this.value" "<{if $tag_sn == $t}>checked="checked"<{/if}>><{$tag}>
           </label>
         </div>
       <{/foreach}>

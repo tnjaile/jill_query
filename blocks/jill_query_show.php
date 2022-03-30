@@ -32,31 +32,31 @@ function jill_query_show($options)
 
     //die(var_dump($query_arr));
     $myts = \MyTextSanitizer::getInstance();
-    $sql  = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
+    $sql = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
           where `qsn`='{$options[0]}' && `qcsnSearch`=1 order by `qcSort`";
     //die($sql);
-    $result           = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $block['content'] = array();
-    $i                = 0;
+    $i = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： qcsn,qsn,qc_title,qcsnSearch,search_operator,isShow,qcSort
         foreach ($all as $k => $v) {
             $$k = $v;
         }
         //過濾讀出的變數值
-        $qc_title                                = $myts->htmlSpecialChars($qc_title);
-        $block['content'][$i]['qcsn']            = $qcsn;
-        $block['content'][$i]['qc_title']        = $qc_title;
-        $block['content'][$i]['qcsnSearch']      = $qcsnSearch;
+        $qc_title = $myts->htmlSpecialChars($qc_title);
+        $block['content'][$i]['qcsn'] = $qcsn;
+        $block['content'][$i]['qc_title'] = $qc_title;
+        $block['content'][$i]['qcsnSearch'] = $qcsnSearch;
         $block['content'][$i]['search_operator'] = $search_operator;
-        $block['content'][$i]['isShow']          = $isShow;
-        $block['content'][$i]['qcSort']          = $qcSort;
+        $block['content'][$i]['isShow'] = $isShow;
+        $block['content'][$i]['qcSort'] = $qcSort;
         $i++;
     }
     //die(var_dump($block));
     $block['query_arr'] = $query_arr;
-    $block['qsn']       = $options[0];
-    $block['email']     = $xoopsUser->email();
+    $block['qsn'] = $options[0];
+    $block['email'] = $xoopsUser ? $xoopsUser->email() : "";
 
     return $block;
 }

@@ -26,7 +26,7 @@ function tag_menu()
 {
     global $xoopsDB;
 
-    $sql    = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('jill_query_tags') . " WHERE `enable`='1'";
+    $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('jill_query_tags') . " WHERE `enable`='1'";
     $result = $xoopsDB->query($sql);
     $option = [];
 
@@ -48,7 +48,7 @@ function get_jill_query_col($qcsn = '')
     $sql = "select * from `" . $xoopsDB->prefix("jill_query_col") . "`
     where `qcsn` = '{$qcsn}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -87,7 +87,7 @@ function count_jill_query_sn($qsn = '')
     $sql = "select count(*) from `" . $xoopsDB->prefix("jill_query_sn") . "`
     where `qsn` = '{$qsn}'";
     //die($sql);
-    $result      = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($count) = $xoopsDB->fetchRow($result);
     return $count;
 }
@@ -96,8 +96,8 @@ function count_jill_query_sn($qsn = '')
 function jill_query_col_search_operator($qsn = "")
 {
     global $xoopsDB;
-    $sql                   = "select DISTINCT search_operator from `" . $xoopsDB->prefix("jill_query_col") . "` where `qsn`=$qsn && (`search_operator` !='') ";
-    $result                = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $sql = "select DISTINCT search_operator from `" . $xoopsDB->prefix("jill_query_col") . "` where `qsn`=$qsn && (`search_operator` !='') ";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($search_operator) = $xoopsDB->fetchRow($result);
     return $search_operator;
 }
@@ -114,7 +114,7 @@ function delete_data($qsn = "")
     if (empty($qsn)) {
         return;
     }
-    $uid     = $xoopsUser->uid();
+    $uid = $xoopsUser->uid();
     $ssn_arr = get_jill_query_allsn_qsn($qsn);
     foreach ($ssn_arr as $ssn) {
         $sql = "delete from `" . $xoopsDB->prefix("jill_query_col_value") . "`
@@ -130,7 +130,7 @@ function delete_data($qsn = "")
     where `qsn` = '{$qsn}'  order by `ssn` ";
     //die($sql);
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
-    $i      = 1;
+    $i = 1;
     while (list($ssn) = $xoopsDB->fetchRow($result)) {
         $sql = "update `" . $xoopsDB->prefix("jill_query_sn") . "` set qrSort='{$i}' where `ssn`='{$ssn}' ";
         $xoopsDB->queryF($sql) or Utility::web_error($sql);
@@ -146,15 +146,15 @@ function get_undertaker($qsn)
     if (!$xoopsUser) {
         return;
     }
-    $uemail = $xoopsUser->email();
+    $uemail = $xoopsUser ? $xoopsUser->email() : '';
     // $sql    = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn' and `editorEmail` LIKE '%{$uemail}%' &&  `isEnable`='1' ";
     $sql = "select `editorEmail` from `" . $xoopsDB->prefix("jill_query") . "` where qsn='$qsn'  &&  `isEnable`='1' ";
     //die($sql);
-    $result            = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, Utility::web_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, Utility::web_error($sql));
     list($editorEmail) = $xoopsDB->fetchRow($result);
     //避免填入空白
     $editorEmail = str_replace(" ", "", $editorEmail);
-    $editor_arr  = explode(";", $editorEmail);
+    $editor_arr = explode(";", $editorEmail);
     //die(var_dump($editor_arr));
     if (in_array($uemail, $editor_arr) or $isAdmin) {
         return true;
@@ -188,7 +188,7 @@ function get_value_of_cell($cell = "")
 function get_groupname($group_id)
 {
     $group_handler = xoops_gethandler('group');
-    $groupname     = $group_handler->get($group_id)->name();
+    $groupname = $group_handler->get($group_id)->name();
     return $groupname;
 }
 
@@ -197,7 +197,7 @@ function get_all_groups($filterOutKeys = array())
 {
 
     $member_handler = xoops_gethandler('member');
-    $group_list     = $member_handler->getGroupList();
+    $group_list = $member_handler->getGroupList();
     // $filterOutKeys  = array(3);
     $group_list = array_diff_key($group_list, array_flip($filterOutKeys));
     // die(var_dump($group_list));
