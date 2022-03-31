@@ -19,6 +19,9 @@ This module provides managers to import EXCEL files, and general users can query
 【History Update】
 jill_query version 2.5 released on 2022-03-22
  =================================================
+1. Fix function:jill_query_show
+jill_query version 2.5 released on 2022-03-22
+ =================================================
 1. Added member Email as search field query
 2. The administrator can use the query keyword to modify the imported EXCEL file
 jill_query version 2.43 released on 2021-08-19
